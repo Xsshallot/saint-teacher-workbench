@@ -1,0 +1,135 @@
+{
+  "name": "saint-ta-team",
+  "version": "1.0.0",
+  "description": "SAINT teaching assistant team - a three-member expert team (insight analyst, lesson planner, care liaison) that collaborates on real workbench data",
+  "author": {
+    "name": "SAINT Teacher Workbench"
+  },
+  "homepage": "https://github.com/Xsshallot/saint-teacher-workbench",
+  "license": "MIT",
+  "keywords": [
+    "saint",
+    "teacher",
+    "assistant",
+    "team",
+    "education",
+    "workbench"
+  ],
+  "agents": [
+    "./agents/saint-ta-team-lead.md",
+    "./agents/insight-analyst.md",
+    "./agents/lesson-planner.md",
+    "./agents/care-liaison.md"
+  ],
+  "expertType": "team",
+  "agentName": "saint-ta-team-lead",
+  "teamInfo": {
+    "leadAgent": "saint-ta-team-lead",
+    "memberAgents": [
+      "insight-analyst",
+      "lesson-planner",
+      "care-liaison"
+    ]
+  },
+  "displayName": {
+    "en": "SAINT Teaching Assistant Team",
+    "zh": "SAINT 助教团"
+  },
+  "profession": {
+    "en": "SAINT Teaching Assistant Team",
+    "zh": "SAINT 助教团"
+  },
+  "displayDescription": {
+    "en": "A three-member TA team on your SAINT workbench: insight analyst, lesson planner and care liaison collaborate with real data for teaching.",
+    "zh": "接入 SAINT 工作台的助教天团：学情分析、备课策划、学员关怀三位助教协同，真实数据辅助教学全流程。"
+  },
+  "avatar": "avatars/team.jpg",
+  "categoryId": "09-OperationsHR",
+  "defaultInitPrompt": {
+    "zh": "学员们最近整体表现怎么样？",
+    "en": "How are my students doing recently?"
+  },
+  "plugin": "saint-ta-team",
+  "tags": [
+    {
+      "en": "Student Insight",
+      "zh": "学情分析"
+    },
+    {
+      "en": "Lesson Planning",
+      "zh": "备课策划"
+    },
+    {
+      "en": "Student Care",
+      "zh": "学员关怀"
+    }
+  ],
+  "quickPrompts": [
+    {
+      "en": "How are my students doing recently?",
+      "zh": "学员们最近整体表现怎么样？"
+    },
+    {
+      "en": "What should I teach next? Give me a lesson plan.",
+      "zh": "下节课该讲什么？帮我出个备课方案"
+    },
+    {
+      "en": "Who needs extra care? Give me follow-up suggestions.",
+      "zh": "哪些学员需要重点关怀？给我跟进建议"
+    }
+  ],
+  "members": [
+    {
+      "id": "saint-ta-team-lead",
+      "displayName": {
+        "en": "Zhuo Youcheng",
+        "zh": "卓有成"
+      },
+      "profession": {
+        "en": "Chief Teaching Operator",
+        "zh": "教学操盘手"
+      },
+      "avatar": "avatars/saint-ta-team-lead.jpg",
+      "role": "lead"
+    },
+    {
+      "id": "insight-analyst",
+      "displayName": {
+        "en": "Miao Zhiqiu",
+        "zh": "苗知秋"
+      },
+      "profession": {
+        "en": "Student Insight Analyst",
+        "zh": "学情分析师"
+      },
+      "avatar": "avatars/insight-analyst.jpg",
+      "role": "member"
+    },
+    {
+      "id": "lesson-planner",
+      "displayName": {
+        "en": "Ke Dagang",
+        "zh": "柯大纲"
+      },
+      "profession": {
+        "en": "Lesson Planning Strategist",
+        "zh": "备课策划师"
+      },
+      "avatar": "avatars/lesson-planner.jpg",
+      "role": "member"
+    },
+    {
+      "id": "care-liaison",
+      "displayName": {
+        "en": "Zhen Tiexin",
+        "zh": "甄贴心"
+      },
+      "profession": {
+        "en": "Student Care Liaison",
+        "zh": "学员关怀官"
+      },
+      "avatar": "avatars/care-liaison.jpg",
+      "role": "member"
+    }
+  ]
+}

@@ -9,7 +9,7 @@ description: 超级教师工作台（SAINT）搭建引导技能。当教师说"�
 
 ## 开始语（触发后第一句话）
 
-> 好的！我们开始搭建你的 SAINT 超级教师工作台。整个过程大约 10 分钟，分 7 步：检查连接器 → 拉取模板 → 配置数据源 → 建定时任务 → 首次同步 → 生成专属 AI 查询技能 → 发布成专属助教专家。我们一步步来。
+> 好的！我们开始搭建你的 SAINT 超级教师工作台。整个过程大约 10 分钟，分 7 步：检查连接器 → 拉取模板 → 配置数据源 → 建定时任务 → 首次同步 → 生成专属 AI 查询技能 → 发布成专属助教专家团。我们一步步来。
 
 ## 第 1 步 · 环境与连接器自检
 
@@ -92,9 +92,9 @@ npm run skill-b   # 生成 skills/skill-b/generated/SKILL.md
 1. 把 `skills/skill-b/generated/SKILL.md` 的内容交给 AI 助手（ZCode 等）挂载为技能。
 2. 从此可以直接问 AI："最近学员怎么样？""XX 同学状态如何？""下节课备什么？"
 
-## 第 7 步 · 发布成 WorkBuddy 专属助教专家（推荐）
+## 第 7 步 · 发布成 WorkBuddy 专属助教专家团（推荐）
 
-> 目标：让"助教"成为 WorkBuddy 里一个常驻专家——不用每次挂 Skill，从「专家中心」点开就能问。
+> 目标：让 SAINT 变成 WorkBuddy 里一个常驻的**专家团（Team 型）**——不是单个专家，而是"一主理人 + 三助教"的协作团队，从「专家中心」点开就能用，复杂问题自动分工协作。
 
 **前置**：第 6 步已生成 Skill B，工作台可访问。
 
@@ -102,38 +102,48 @@ npm run skill-b   # 生成 skills/skill-b/generated/SKILL.md
 
 在 WorkBuddy 对话里直接说：
 
-> 帮我把 SAINT 的 Skill B（skills/skill-b/generated/SKILL.md）转化成我的专属助教专家
+> 帮我把 SAINT 的 Skill B（skills/skill-b/generated/SKILL.md）转化成我的专属助教专家团，Team 型：一位主理人 + 学情分析师、备课策划师、学员关怀官三位成员
 
-WorkBuddy 内置的专家管理能力会自动完成全部流程：初始化专家目录 → 生成 plugin.json（名称/分类/标签/推荐提示词）→ 生成 Agent 定义 → 校验 → 注册。完成后在左侧栏「专家 → 我的专家」出现。
+WorkBuddy 内置的专家管理能力会按专家团规范自动完成全部流程：初始化专家目录 → 生成 plugin.json + settings.json + 4 个 Agent 定义 → 生成风格统一的成员头像 → 校验 → 注册。完成后在左侧栏「专家 → 我的专家」出现，类型显示**"专家团"**。
 
 ### 方式二：手动安装现成模板
 
-仓库已内置完整专家包模板 `experts/saint-assistant/`（含 plugin.json + Agent 定义 + 使用说明）：
+仓库已内置完整专家团模板 `experts/saint-ta-team/`（plugin.json + settings.json + 4 个 Agent MD + 5 张头像）：
 
 1. 复制模板目录到 WorkBuddy 专家目录：
    ```
-   Windows: %USERPROFILE%\.workbuddy\plugins\marketplaces\my-experts\plugins\saint-assistant\
-   macOS/Linux: ~/.workbuddy/plugins/marketplaces/my-experts/plugins/saint-assistant/
+   Windows: %USERPROFILE%\.workbuddy\plugins\marketplaces\my-experts\plugins\saint-ta-team\
+   macOS/Linux: ~/.workbuddy/plugins/marketplaces/my-experts/plugins/saint-ta-team/
    ```
-2. 编辑 `agents/saint-assistant.md`，把正文中的 `{BASE}` 替换为自己的工作台地址（默认 `http://localhost:8787`）
-3. 放置头像 `avatars/expert.jpg`（512×512 以内，可直接用 `docs/assets/logo.jpg`）
-4. 重启 WorkBuddy，在「专家中心 → 我的专家」查看
+2. 把 `agents/` 下 4 个 MD 中的 `{BASE}` 批量替换为自己的工作台地址（默认 `http://localhost:8787`）
+3. 重启 WorkBuddy，在「专家中心 → 我的专家」查看
 
-### 专家包关键信息（自动转化时确认这些值）
+### 专家团关键信息（自动转化时确认这些值）
 
 | 项 | 推荐值 |
 |---|---|
-| 名称 / 花名 | `saint-assistant` / SAINT 助教 |
-| 职业 | 专属助教（Teaching Assistant） |
+| 团队名称 | `saint-ta-team` / SAINT 助教团（SAINT Teaching Assistant Team） |
 | 分类 | 运营人力（培训） |
-| 标签（3 个） | 学员跟进 / 备课辅助 / 教学数据分析 |
-| 推荐提示词（3 个） | "最近学员们整体怎么样？" / "下节课该准备什么？" / "谁需要重点跟进？" |
+| 标签（3 个） | 学情分析 / 备课策划 / 学员关怀 |
+| 推荐提示词（3 个） | "学员们最近整体表现怎么样？" / "下节课该讲什么？帮我出个备课方案" / "哪些学员需要重点关怀？给我跟进建议" |
+
+**成员分工（Team 型必须主理人 + 成员结构）：**
+
+| 角色 | Agent ID | 花名 | 职责 | 数据接口 |
+|---|---|---|---|---|
+| 主理人 | `saint-ta-team-lead` | 卓有成 | 教学操盘手：TeamCreate 建团、调度、汇编 | —（编排） |
+| 学情分析师 | `insight-analyst` | 苗知秋 | 学员画像/活跃趋势/风险识别 | students / activity / submissions |
+| 备课策划师 | `lesson-planner` | 柯大纲 | 进度/纪要检索/备课方案 | lessons / minutes-search / feedback |
+| 学员关怀官 | `care-liaison` | 甄贴心 | 满意度解读/跟进话术 | satisfaction / feedback / stats |
+
+> 团队协作铁律（写入主理人 MD）：主理人亲自 TeamCreate；成员独立产出、SendMessage 回传；跨成员信息必须经主理人中转；专业结论以成员为准。完整规范参考 `experts/saint-ta-team/agents/saint-ta-team-lead.md`。
 
 ### 验收标准
 
-- [ ] 专家中心「我的专家」出现 SAINT 助教（带头像与能力介绍）
-- [ ] 点开专家问"最近学员们整体怎么样？"，能基于工作台真实数据回答
-- [ ] 问"这节课讲了什么？"，能检索课堂纪要知识库作答
+- [ ] 专家中心「我的专家」出现 **SAINT 助教团**，类型显示**专家团**，可见 4 位成员头像与花名
+- [ ] 问"学员们最近整体表现怎么样？"——主理人调度多位助教并行分析后给出汇总（能看到协作过程）
+- [ ] 问"下节课该讲什么？"——备课策划师结合学情与愿望聚类输出备课方案
+- [ ] 问"这节课讲了什么？"——备课策划师检索纪要知识库作答
 
 ## 常见问题（FAQ）
 
@@ -144,7 +154,7 @@ WorkBuddy 内置的专家管理能力会自动完成全部流程：初始化专�
 | 导入后数据为 0 | `data/raw/` 文件缺失或字段名不匹配；对照 `docs/contracts/` 修正 |
 | 想换一台电脑用 | 整个目录拷走即可；数据都在 `data/saint.db`（注意备份，勿提交到 git） |
 | 想多人/多班级 | v0.1 已支持单教师多班级（`stu_profile.class_name`）；多教师需扩展 `sys_user` |
-| 专家发布后在「我的专家」里找不到 | 确认目录位置正确（`~/.workbuddy/plugins/marketplaces/my-experts/plugins/`）且已重启 WorkBuddy；Agent MD 中的 `{BASE}` 未替换会导致问不出数据 |
+| 专家团发布后在「我的专家」里找不到 | 确认目录位置正确（`~/.workbuddy/plugins/marketplaces/my-experts/plugins/`）且已重启 WorkBuddy；Agent MD 中的 `{BASE}` 未替换会导致问不出数据；Team 型缺 `settings.json` 会导致无法识别主理人 |
 
 ## 安全红线（必须告知用户）
 
