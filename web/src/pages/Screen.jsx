@@ -75,17 +75,17 @@ export default function Screen() {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 flex-1 min-h-0">
         {/* 提交趋势大图 */}
-        <div className="lg:col-span-2 bg-slate-900/70 border border-slate-800 rounded-2xl p-6 flex flex-col">
+        <div className="lg:col-span-2 bg-slate-900/70 border border-slate-800 rounded-2xl p-6 flex flex-col min-h-[320px]">
           <div className="text-slate-400 text-sm tracking-widest mb-4">作业提交趋势（近 12 周）</div>
-          <div className="flex-1 flex items-end gap-2 min-h-0">
+          <div className="flex-1 flex items-stretch gap-2 min-h-0">
             {trend.map((t) => (
-              <div key={t.week} className="flex-1 flex flex-col items-center gap-2 group">
-                <div className="text-xs text-slate-500 tabular-nums opacity-0 group-hover:opacity-100 transition-opacity">{t.count}</div>
+              <div key={t.week} className="flex-1 flex flex-col justify-end items-center gap-2 group h-full min-w-0">
+                <div className="text-xs text-slate-400 tabular-nums opacity-60 group-hover:opacity-100 transition-opacity">{t.count}</div>
                 <div
                   className="w-full rounded-t-lg bg-gradient-to-t from-primary-700 to-primary-400 hover:from-primary-600 hover:to-primary-300 transition-all"
-                  style={{ height: `${Math.max(4, (t.count / maxTrend) * 100)}%` }}
+                  style={{ height: `${Math.max(4, (t.count / maxTrend) * 82)}%` }}
                 />
-                <div className="text-[10px] text-slate-600">{t.week.slice(5)}</div>
+                <div className="text-[10px] text-slate-600 whitespace-nowrap">{t.week.slice(5)}</div>
               </div>
             ))}
           </div>
