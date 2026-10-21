@@ -58,4 +58,10 @@ export function J(v, fallback = []) {
   if (v === null || v === undefined || v === '') return fallback;
   try { return JSON.parse(v); } catch { return fallback; }
 }
+
+/** 中国时间（Asia/Shanghai）"YYYY-MM-DD HH:mm:ss" —— 所有同步/日志时间统一用此 */
+export function cnNow() {
+  return new Date().toLocaleString('sv-SE', { timeZone: 'Asia/Shanghai' }).replace('T', ' ');
+}
+
 export { db };

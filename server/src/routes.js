@@ -2,7 +2,7 @@
  * SAINT REST API（只读为主 + 同步触发 + Skill B 生成）
  * 所有 /api/* 返回 JSON：{ ok, data } 或 { ok:false, error }
  */
-import { all, get, run, J, insert, update } from './db.js';
+import { all, get, run, J, insert, update, cnNow } from './db.js';
 import { generateSkillB } from './skill-b.js';
 
 const ok = (data) => ({ ok: true, data });
@@ -10,6 +10,8 @@ const fail = (error) => ({ ok: false, error: String(error) });
 
 const num = (v) => (v == null ? null : Number(v));
 const day = (t) => (t || '').slice(0, 10);
+// 统一中国时间（Asia/Shanghai）
+const nowStr = () => cnNow();
 
 // ---------- 指标卡 ----------
 function stats() {
@@ -186,6 +188,13 @@ function feedback({ theme } = {}) {
 }
 
 // ---------- 同步 ----------
+function documents({ doc_type } = {}) {
+  const args = [];
+  let sql = `SELECT * FROM doc_material WHERE is_deleted=0`;
+  if (doc_type) { sql += ` AND doc_type=?`; args.push(doc_type); }
+  sql += ` ORDER BY last_viewed DESC, id DESC`;
+  return all(sql, ...args);
+}
 function syncStatus() {
   const sources = all(`SELECT * FROM syn_source WHERE is_deleted=0 ORDER BY id`);
   const jobs = all(`SELECT * FROM sys_cron_job WHERE is_deleted=0 ORDER BY id`).map((j) => ({
@@ -219,9 +228,7 @@ async function syncRun(jobKey = 'all') {
   }
   return ok(results);
 }
-function nowStr() {
-  return new Date().toISOString().slice(0, 19).replace('T', ' ');
-}
+// nowStr 已在文件头部定义为 cnNow()（中国时间）
 
 // ---------- 路由表 ----------
 export async function handleApi(req, res, pathname, query) {
@@ -249,6 +256,7 @@ export async function handleApi(req, res, pathname, query) {
     if (pathname === '/api/assignments') return send(200, ok(assignments()));
     if (pathname === '/api/submissions') return send(200, ok(submissions(query)));
     if (pathname === '/api/feedback') return send(200, ok(feedback(query)));
+    if (pathname === '/api/documents') return send(200, ok(documents(query)));
     if (pathname === '/api/sync/status') return send(200, ok(syncStatus()));
     if (pathname === '/api/sync/run' && req.method === 'POST') {
       let body = '';

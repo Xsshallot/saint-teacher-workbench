@@ -11,7 +11,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { all, get, run, insert, ROOT } from '../../server/src/db.js';
+import { all, get, run, insert, ROOT, cnNow } from '../../server/src/db.js';
 
 const RAW = path.join(ROOT, 'data', 'raw', 'tencent');
 const __isMain = process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url);
@@ -44,11 +44,10 @@ function ensureStudent(nickname, courseId) {
   const key = nickname.trim();
   let s = get(`SELECT id FROM stu_profile WHERE nickname=?`, key);
   if (s) return s.id;
-  const now = new Date().toISOString().slice(0, 19).replace('T', ' ');
   return insert('stu_profile', {
     nickname: key, class_name: 'AI 前沿营', avatar_hue: Math.abs(hashCode(key)) % 360,
     focus_areas: ['探索中'], tags: ['连接器同步'], source: 'tencent-import',
-    first_seen: now, last_active: now, activity_count: 1,
+    first_seen: cnNow(), last_active: cnNow(), activity_count: 1,
   });
 }
 function hashCode(s) {
@@ -59,7 +58,7 @@ function hashCode(s) {
 
 export async function runImport() {
   const t0 = Date.now();
-  const stats = { students: 0, submissions: 0, wishes: 0, followups: 0, meetings: 0, skipped_docs: 0, added: 0, updated: 0 };
+  const stats = { students: 0, submissions: 0, wishes: 0, followups: 0, meetings: 0, documents: 0, skipped_docs: 0, added: 0, updated: 0 };
 
   // ---------- 腾讯问卷 ----------
   const surveyFile = path.join(RAW, 'survey_answers.json');
@@ -138,21 +137,34 @@ export async function runImport() {
     run(`UPDATE syn_source SET status='已连接', update_time=datetime('now','localtime') WHERE source_key='tencent-meeting'`);
   }
 
-  // ---------- 腾讯文档（可能 blocked） ----------
+  // ---------- 腾讯文档（最近文档列表 → 课程资料） ----------
   const docsFile = path.join(RAW, 'docs.json');
   if (fs.existsSync(docsFile)) {
     const data = readJson('docs.json');
-    if (data.status === 'blocked' || !(data.documents || []).length) {
+    const docs = data.documents || [];
+    if (docs.length) {
+      // 幂等：清掉本连接器的旧文档资料，按最新列表重建
+      run(`DELETE FROM doc_material WHERE source='tencent-import'`);
+      const course = get(`SELECT id FROM crs_course WHERE code='AI-CAMP-2026'`);
+      for (const d of docs) {
+        insert('doc_material', {
+          course_id: course?.id || null, title: d.title, doc_type: d.doc_type || 'doc',
+          owner: d.owner || null, url: d.url || null,
+          last_viewed: d.last_viewed || null, size: d.size || null,
+          source: 'tencent-import',
+        });
+        stats.documents++;
+      }
+      run(`UPDATE syn_source SET status='已连接', update_time=datetime('now','localtime') WHERE source_key='tencent-docs'`);
+    } else {
       run(`UPDATE syn_source SET status='未配置', update_time=datetime('now','localtime') WHERE source_key='tencent-docs'`);
       stats.skipped_docs = 1;
-    } else {
-      // 文档数据入库逻辑随真实导出格式扩展
-      run(`UPDATE syn_source SET status='已连接', update_time=datetime('now','localtime') WHERE source_key='tencent-docs'`);
     }
   }
 
-  stats.added = stats.students + stats.submissions + stats.wishes + stats.followups + stats.meetings;
+  stats.added = stats.students + stats.submissions + stats.wishes + stats.followups + stats.meetings + stats.documents;
   stats.elapsed_ms = Date.now() - t0;
+  stats.finished_at = cnNow();
 
   if (__isMain) {
     console.log('SAINT tencent-import 完成：');

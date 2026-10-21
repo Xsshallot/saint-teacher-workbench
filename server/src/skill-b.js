@@ -13,6 +13,7 @@ export function generateSkillB(baseUrl) {
     { m: 'GET', p: '/api/assignments', d: '作业/任务列表（含提交率统计）' },
     { m: 'GET', p: '/api/submissions?assignment_id=&student_id=&status=', d: '作业提交明细（状态、摘要、附件数）' },
     { m: 'GET', p: '/api/feedback?theme=', d: '反馈墙：下节课愿望 + 主题聚类' },
+    { m: 'GET', p: '/api/documents?doc_type=', d: '腾讯文档资料列表（最近同步的文档/表格/收集表）' },
     { m: 'GET', p: '/api/sync/status', d: '数据源与同步任务状态、最近同步日志' },
     { m: 'GET', p: '/api/contract', d: '数据契约（各数据域字段定义）' },
   ];

@@ -4,9 +4,10 @@
  * 依次执行：local-import（存量采集数据）→ tencent-import（腾讯系连接器数据）
  * 运行：npm run sync
  */
-import { insert, run } from '../server/src/db.js';
+import { insert, run, cnNow } from '../server/src/db.js';
 
-const now = () => new Date().toISOString().slice(0, 19).replace('T', ' ');
+// 统一中国时间（Asia/Shanghai）
+const now = () => cnNow();
 
 async function runJob(jobKey, sourceKey, importPath, label) {
   const logId = insert('syn_log', { job_key: jobKey, source_key: sourceKey, started_at: now(), status: 'running' });
@@ -15,12 +16,12 @@ async function runJob(jobKey, sourceKey, importPath, label) {
     const r = await runImport();
     run(`UPDATE syn_log SET finished_at=?, status='success', added=?, updated=?, message=? WHERE id=?`,
       now(), r.added ?? 0, r.updated ?? 0, `${label}完成：${JSON.stringify(r)}`, logId);
-    run(`UPDATE sys_cron_job SET last_run_time=datetime('now','localtime'), last_status='success' WHERE job_key=?`, jobKey);
+    run(`UPDATE sys_cron_job SET last_run_time=?, last_status='success' WHERE job_key=?`, now(), jobKey);
     console.log(`✅ ${label}：`, JSON.stringify(r));
     return r;
   } catch (e) {
     run(`UPDATE syn_log SET finished_at=?, status='failed', message=? WHERE id=?`, now(), String(e), logId);
-    run(`UPDATE sys_cron_job SET last_run_time=datetime('now','localtime'), last_status='failed' WHERE job_key=?`, jobKey);
+    run(`UPDATE sys_cron_job SET last_run_time=?, last_status='failed' WHERE job_key=?`, now(), jobKey);
     console.error(`❌ ${label}失败：`, e);
     return { error: String(e) };
   }

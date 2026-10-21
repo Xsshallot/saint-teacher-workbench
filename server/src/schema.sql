@@ -224,6 +224,25 @@ CREATE TABLE IF NOT EXISTS fbk_next_wish (
   is_deleted    INTEGER DEFAULT 0
 );
 
+-- ---------- 文档资料 doc_（腾讯文档同步） ----------
+CREATE TABLE IF NOT EXISTS doc_material (
+  id            INTEGER PRIMARY KEY AUTOINCREMENT,
+  course_id     INTEGER,
+  title         TEXT NOT NULL,
+  doc_type      TEXT DEFAULT 'doc',            -- doc/sheet/online-doc/form/slide
+  owner         TEXT,                          -- 所有者
+  url           TEXT,
+  last_viewed   TEXT,                          -- 腾讯文档展示的中国时间
+  size          TEXT,
+  source        TEXT DEFAULT 'tencent-import',
+  create_by     TEXT DEFAULT 'system',
+  create_time   TEXT DEFAULT (datetime('now','localtime')),
+  update_by     TEXT,
+  update_time   TEXT,
+  is_deleted    INTEGER DEFAULT 0
+);
+CREATE INDEX IF NOT EXISTS idx_doc_material_course ON doc_material(course_id);
+
 -- ---------- 数据同步 syn_ ----------
 CREATE TABLE IF NOT EXISTS syn_source (
   id            INTEGER PRIMARY KEY AUTOINCREMENT,

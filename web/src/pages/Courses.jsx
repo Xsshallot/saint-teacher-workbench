@@ -2,17 +2,22 @@ import React from 'react';
 import { api } from '../api.js';
 import { Card, Badge, Loading, Empty, useApi, fmtDay } from '../components/ui.jsx';
 
+const docTypeColor = { doc: 'sky', sheet: 'emerald', 'online-doc': 'violet', form: 'amber', slide: 'rose' };
+const docTypeName = { doc: '文档', sheet: '表格', 'online-doc': '在线文档', form: '收集表', slide: '幻灯片' };
+
 export default function Courses() {
   const courses = useApi(api.courses);
   const lessons = useApi(api.lessons);
   const meetings = useApi(api.meetings);
+  const docs = useApi(api.documents);
 
-  if (courses.loading || lessons.loading || meetings.loading) return <Loading />;
+  if (courses.loading || lessons.loading || meetings.loading || docs.loading) return <Loading />;
   if (courses.error) return <Empty text={`加载失败：${courses.error}`} />;
 
   const course = courses.data?.[0];
   const lessonList = lessons.data || [];
   const meetingList = meetings.data || [];
+  const docList = docs.data || [];
 
   return (
     <div className="space-y-6">
@@ -48,6 +53,29 @@ export default function Courses() {
             ))}
             {!lessonList.length && <Empty />}
           </div>
+        </div>
+      </Card>
+
+      {/* 腾讯文档资料 */}
+      <Card title="腾讯文档 · 最近资料" extra={<Badge color="primary">{docList.length} 份</Badge>}>
+        <div className="space-y-2 max-h-[420px] overflow-y-auto pt-1">
+          {docList.map((d) => (
+            <div key={d.id} className="border border-slate-200 rounded-lg p-3 hover:border-primary-200 transition-colors">
+              <div className="flex items-center gap-2 flex-wrap">
+                <span className="text-sm font-medium text-slate-700">{d.title}</span>
+                <Badge color={docTypeColor[d.doc_type] || 'slate'}>{docTypeName[d.doc_type] || d.doc_type}</Badge>
+                <span className="text-[11px] text-slate-400 ml-auto">
+                  {d.owner && `${d.owner} · `}{d.last_viewed}
+                </span>
+              </div>
+              {d.url && (
+                <a href={d.url} target="_blank" rel="noreferrer" className="text-[11px] text-primary-600 hover:underline mt-1 inline-block">
+                  打开文档 ↗
+                </a>
+              )}
+            </div>
+          ))}
+          {!docList.length && <Empty text="暂无同步的文档资料" />}
         </div>
       </Card>
 
