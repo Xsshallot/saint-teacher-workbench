@@ -1,0 +1,82 @@
+{
+  "name": "saint-dev-team",
+  "version": "1.0.0",
+  "description": "SAINT workbench development team - three engineers (environment setup, data integration, AI configuration) deliver a complete SAINT teacher workbench from scratch",
+  "author": {
+    "name": "SAINT Teacher Workbench"
+  },
+  "homepage": "https://github.com/Xsshallot/saint-teacher-workbench",
+  "license": "MIT",
+  "keywords": ["saint", "workbench", "dev team", "setup", "education"],
+  "agents": [
+    "./agents/saint-dev-team-lead.md",
+    "./agents/env-engineer.md",
+    "./agents/data-engineer.md",
+    "./agents/ai-configurator.md"
+  ],
+  "expertType": "team",
+  "agentName": "saint-dev-team-lead",
+  "teamInfo": {
+    "leadAgent": "saint-dev-team-lead",
+    "memberAgents": ["env-engineer", "data-engineer", "ai-configurator"]
+  },
+  "displayName": {
+    "en": "SAINT Workbench Dev Team",
+    "zh": "超级教师工作台开发团"
+  },
+  "profession": {
+    "en": "SAINT Workbench Dev Team",
+    "zh": "超级教师工作台开发团"
+  },
+  "displayDescription": {
+    "en": "A three-engineer dev team that builds your SAINT teacher workbench from scratch: environment setup, data integration and AI configuration.",
+    "zh": "从零搭建 SAINT 超级教师工作台的开发天团：环境搭建、数据接入、AI 配置三位工程师协同交付。"
+  },
+  "avatar": "avatars/team.jpg",
+  "categoryId": "02-Engineering",
+  "defaultInitPrompt": {
+    "zh": "帮我从零搭建 SAINT 超级教师工作台",
+    "en": "Help me build the SAINT teacher workbench from scratch"
+  },
+  "plugin": "saint-dev-team",
+  "tags": [
+    { "en": "Workbench Setup", "zh": "工作台搭建" },
+    { "en": "Data Integration", "zh": "数据接入" },
+    { "en": "AI Skill Configuration", "zh": "AI 技能配置" }
+  ],
+  "quickPrompts": [
+    { "en": "Help me build the SAINT teacher workbench from scratch", "zh": "帮我从零搭建 SAINT 超级教师工作台" },
+    { "en": "My workbench fails to start or sync. Help me troubleshoot.", "zh": "我的工作台启动/同步失败了，帮我排查" },
+    { "en": "Upgrade my workbench and re-publish the assistant team.", "zh": "帮我升级工作台并重新发布助教团" }
+  ],
+  "members": [
+    {
+      "id": "saint-dev-team-lead",
+      "displayName": { "en": "Qi Luocheng", "zh": "齐落成" },
+      "profession": { "en": "Delivery Director", "zh": "交付总监" },
+      "avatar": "avatars/saint-dev-team-lead.jpg",
+      "role": "lead"
+    },
+    {
+      "id": "env-engineer",
+      "displayName": { "en": "An Qiye", "zh": "安启业" },
+      "profession": { "en": "Environment Setup Engineer", "zh": "环境搭建工程师" },
+      "avatar": "avatars/env-engineer.jpg",
+      "role": "member"
+    },
+    {
+      "id": "data-engineer",
+      "displayName": { "en": "Lian Huitong", "zh": "连汇通" },
+      "profession": { "en": "Data Integration Engineer", "zh": "数据接入工程师" },
+      "avatar": "avatars/data-engineer.jpg",
+      "role": "member"
+    },
+    {
+      "id": "ai-configurator",
+      "displayName": { "en": "Ai Peiqi", "zh": "艾配齐" },
+      "profession": { "en": "AI Configuration Engineer", "zh": "AI 配置工程师" },
+      "avatar": "avatars/ai-configurator.jpg",
+      "role": "member"
+    }
+  ]
+}
