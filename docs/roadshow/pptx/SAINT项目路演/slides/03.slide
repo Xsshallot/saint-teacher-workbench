@@ -1,0 +1,28 @@
+<Slide style={{ width: 1280, height: 720, background: '#0B1220', position: 'relative', padding: 0, overflow: 'hidden' }}>
+  <Box style={{ position: 'absolute', top: 120, left: 0, width: 1280, height: 480, background: 'radial-gradient(ellipse at center, rgba(91,132,250,0.14) 0%, rgba(11,18,32,0) 65%)' }} />
+  <Box style={{ position: 'absolute', top: 150, left: 0, width: 1280, alignItems: 'center' }}>
+    <Box style={{ padding: '8px 26px', borderRadius: 9999, border: '1px solid #1E3A5F', background: 'rgba(16,26,46,0.9)', marginBottom: 30 }}>
+      <Text style={{ fontSize: 17, color: '#7DD3FC', letterSpacing: 6 }}>我的诉求</Text>
+    </Box>
+    <Text style={{ fontSize: 54, fontWeight: 'bold', color: '#F8FAFC', textAlign: 'center', lineHeight: 1.35 }}>
+      让 AI 替我盯着每个学员
+      <br />
+      我只管<span style={{ color: '#FBBF24' }}>判断</span>和<span style={{ color: '#22D3EE' }}>讲课</span>
+    </Text>
+  </Box>
+
+  <Box style={{ position: 'absolute', top: 470, left: 100, width: 1080, flexDirection: 'row', gap: 24 }}>
+    {[
+      { k: '跟得上', v: '学员动态数据化', d: '每日同步 · 360° 画像 · 风险预警' },
+      { k: '备得准', v: '课程内容有依据', d: '愿望聚类 · 纪要检索 · 覆盖率' },
+      { k: '管得好', v: '教学过程有团队', d: '助教分工协作 · 教师只做决策' },
+    ].map((g) => (
+      <Box key={g.k} style={{ flex: 1, background: 'rgba(16,26,46,0.9)', border: '1px solid #1E3A5F', borderRadius: 14, padding: '30px 32px' }}>
+        <Text style={{ fontSize: 28, fontWeight: 'bold', color: '#5B84FA' }}>{g.k}</Text>
+        <Text style={{ fontSize: 18, color: '#F8FAFC', marginTop: 12, fontWeight: 'bold' }}>{g.v}</Text>
+        <Text style={{ fontSize: 14.5, color: '#64748B', marginTop: 10 }}>{g.d}</Text>
+      </Box>
+    ))}
+  </Box>
+  <Text style={{ position: 'absolute', bottom: 30, left: 60, fontSize: 15, color: '#475569' }}>一个人做不到，但一个团队可以 —— 所以我选 WorkBuddy，不是用它当工具，而是用它组建团队</Text>
+</Slide>

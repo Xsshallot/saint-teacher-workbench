@@ -1,0 +1,45 @@
+<Slide style={{ width: 1280, height: 720, background: '#0B1220', position: 'relative', padding: 0, overflow: 'hidden' }}>
+  <Box style={{ position: 'absolute', top: -180, right: -160, width: 560, height: 560, borderRadius: 9999, background: 'radial-gradient(circle, rgba(91,132,250,0.22) 0%, rgba(91,132,250,0) 70%)' }} />
+  <Box style={{ position: 'absolute', bottom: -220, left: -140, width: 620, height: 620, borderRadius: 9999, background: 'radial-gradient(circle, rgba(34,211,238,0.14) 0%, rgba(34,211,238,0) 70%)' }} />
+
+  <Box style={{ position: 'absolute', top: 56, left: 72, flexDirection: 'row', alignItems: 'center', gap: 22 }}>
+    <Image src="assets/logo.jpg" style={{ width: 88, height: 88, borderRadius: 16, border: '2px solid #1E3A5F' }} />
+    <Text style={{ fontSize: 19, color: '#94A3B8', letterSpacing: 6 }}>SAINT · WORKBUDDY ECOSYSTEM</Text>
+  </Box>
+
+  <Box style={{ position: 'absolute', top: 218, left: 72, width: 1150 }}>
+    <Text style={{ fontSize: 64, fontWeight: 'bold', color: '#F8FAFC', lineHeight: 1.15 }}>
+      SAINT 超级教师工作台
+    </Text>
+    <Text style={{ fontSize: 58, fontWeight: 'bold', marginTop: 12, backgroundImage: 'linear-gradient(135deg, #5B84FA 0%, #22D3EE 100%)', backgroundClip: 'text', color: 'transparent' }}>
+      一个教师 + WorkBuddy = 一支 AI 教学团队
+    </Text>
+  </Box>
+
+  <Box style={{ position: 'absolute', top: 442, left: 72, width: 1136, flexDirection: 'row', gap: 14 }}>
+    {['连接器 · 数据自动汇入', '自动化 · 每日定时同步', '专家团 · 现场搭建', '人工判断 · 教师决策'].map((t) => (
+      <Box key={t} style={{ flex: 1, padding: '11px 0', borderRadius: 9999, border: '1px solid #1E3A5F', background: 'rgba(16,26,46,0.9)', alignItems: 'center' }}>
+        <Text style={{ fontSize: 16, color: '#7DD3FC' }}>{t}</Text>
+      </Box>
+    ))}
+  </Box>
+
+  <Box style={{ position: 'absolute', top: 532, left: 72, width: 1136, flexDirection: 'row', gap: 16 }}>
+    {[
+      { n: '46', l: '真实学员', c: '#F8FAFC' },
+      { n: '22', l: '课堂会议', c: '#F8FAFC' },
+      { n: '4.5', l: '平均满意度', c: '#FBBF24' },
+      { n: '100', l: 'NPS', c: '#22D3EE' },
+    ].map((s) => (
+      <Box key={s.l} style={{ flex: 1, padding: '18px 24px', borderRadius: 14, background: 'rgba(16,26,46,0.95)', border: '1px solid #1E3A5F', flexDirection: 'row', alignItems: 'center', gap: 16 }}>
+        <Text style={{ fontSize: 44, fontWeight: 'bold', color: s.c, fontFamily: 'JetBrains Mono, Consolas' }}>{s.n}</Text>
+        <Text style={{ fontSize: 15, color: '#94A3B8' }}>{s.l}</Text>
+      </Box>
+    ))}
+  </Box>
+
+  <Box style={{ position: 'absolute', bottom: 36, left: 72, flexDirection: 'row', alignItems: 'center', gap: 14 }}>
+    <Box style={{ width: 8, height: 8, borderRadius: 9999, background: '#FBBF24' }} />
+    <Text style={{ fontSize: 15, color: '#64748B' }}>AI 前沿营 · 小龙虾训练营 讲师 · 数据区间 2026.06 - 10 · 全程 WorkBuddy 驱动</Text>
+  </Box>
+</Slide>

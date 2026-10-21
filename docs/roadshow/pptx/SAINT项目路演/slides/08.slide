@@ -1,0 +1,76 @@
+<Slide style={{ width: 1280, height: 720, background: '#0B1220', flexDirection: 'column', padding: '26px 56px 0' }}>
+  <Text style={{ fontSize: 34, fontWeight: 'bold', color: '#F8FAFC' }}>双专家团：不是工具，是会协作的团队</Text>
+  <Text style={{ fontSize: 15, color: '#64748B', marginTop: 6 }}>Team 型 · 主理人 + 成员 · 现场用 WorkBuddy 搭建（生成配置 → 生成头像 → 校验 → 注册）</Text>
+
+  <Box style={{ flexDirection: 'row', gap: 22, marginTop: 20 }}>
+    <Box style={{ flex: 1, background: 'rgba(16,26,46,0.9)', border: '1.5px solid #5B84FA', borderRadius: 16, padding: '26px 24px' }}>
+      <Box style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+        <Text style={{ fontSize: 21, fontWeight: 'bold', color: '#93C5FD' }}>💙 SAINT 助教团</Text>
+        <Text style={{ fontSize: 12.5, color: '#7B8DB3' }}>日常使用 · 查数据给建议</Text>
+      </Box>
+      <Box style={{ flexDirection: 'row', alignItems: 'center', gap: 12, marginTop: 14 }}>
+        <Image src="assets/ta-lead.jpg" style={{ width: 52, height: 52, borderRadius: 9999, border: '2px solid #5B84FA' }} />
+        <Box>
+          <Text style={{ fontSize: 16, fontWeight: 'bold', color: '#F8FAFC' }}>卓有成 · 主理人</Text>
+          <Text style={{ fontSize: 12.5, color: '#94A3B8' }}>教学操盘手 · 调度汇编</Text>
+        </Box>
+      </Box>
+      <Box style={{ flexDirection: 'row', gap: 12, marginTop: 18 }}>
+        {[
+          { img: 'ta-miao.jpg', n: '苗知秋', p: '学情分析师', d: '画像/趋势/风险' },
+          { img: 'ta-ke.jpg', n: '柯大纲', p: '备课策划师', d: '纪要/愿望/方案' },
+          { img: 'ta-zhen.jpg', n: '甄贴心', p: '学员关怀官', d: '满意度/话术' },
+        ].map((m) => (
+          <Box key={m.n} style={{ flex: 1, alignItems: 'center', background: '#0D1830', borderRadius: 10, padding: '12px 6px' }}>
+            <Image src={'assets/' + m.img} style={{ width: 52, height: 52, borderRadius: 9999 }} />
+            <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#F8FAFC', marginTop: 8 }}>{m.n}</Text>
+            <Text style={{ fontSize: 11, color: '#22D3EE', marginTop: 2 }}>{m.p}</Text>
+            <Text style={{ fontSize: 10.5, color: '#64748B', marginTop: 4, textAlign: 'center' }}>{m.d}</Text>
+          </Box>
+        ))}
+      </Box>
+      <Text style={{ fontSize: 13, color: '#7B8DB3', marginTop: 18, lineHeight: 1.5 }}>主理人建团 → 并行调度 → 成员查真实数据回传 → 汇编交付，<span style={{ color: '#7DD3FC' }}>协作过程全程可见</span></Text>
+    </Box>
+
+    <Box style={{ flex: 1, background: 'rgba(26,21,8,0.9)', border: '1.5px solid #F59E0B', borderRadius: 16, padding: '20px 24px' }}>
+      <Box style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+        <Text style={{ fontSize: 21, fontWeight: 'bold', color: '#FCD34D' }}>🛠️ 超级教师工作台开发团</Text>
+        <Text style={{ fontSize: 12.5, color: '#A1874B' }}>自我复制 · 指导从零搭建</Text>
+      </Box>
+      <Box style={{ flexDirection: 'row', alignItems: 'center', gap: 12, marginTop: 14 }}>
+        <Image src="assets/dev-lead.jpg" style={{ width: 52, height: 52, borderRadius: 9999, border: '2px solid #F59E0B' }} />
+        <Box>
+          <Text style={{ fontSize: 16, fontWeight: 'bold', color: '#F8FAFC' }}>齐落成 · 主理人</Text>
+          <Text style={{ fontSize: 12.5, color: '#94A3B8' }}>交付总监 · 四阶段验收</Text>
+        </Box>
+      </Box>
+      <Box style={{ flexDirection: 'row', gap: 12, marginTop: 14 }}>
+        {[
+          { img: 'dev-an.jpg', n: '安启业', p: '环境搭建', d: 'Node/模板/启动' },
+          { img: 'dev-lian.jpg', n: '连汇通', p: '数据接入', d: '连接器/同步' },
+          { img: 'dev-ai.jpg', n: '艾配齐', p: 'AI 配置', d: 'Skill/专家团' },
+        ].map((m) => (
+          <Box key={m.n} style={{ flex: 1, alignItems: 'center', background: '#0D1830', borderRadius: 10, padding: '12px 6px' }}>
+            <Image src={'assets/' + m.img} style={{ width: 46, height: 46, borderRadius: 9999 }} />
+            <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#F8FAFC', marginTop: 8 }}>{m.n}</Text>
+            <Text style={{ fontSize: 11, color: '#FCD34D', marginTop: 2 }}>{m.p}</Text>
+            <Text style={{ fontSize: 10.5, color: '#64748B', marginTop: 4, textAlign: 'center' }}>{m.d}</Text>
+          </Box>
+        ))}
+      </Box>
+      <Text style={{ fontSize: 13, color: '#A1874B', marginTop: 18, lineHeight: 1.5 }}>四阶段严格串行（环境→数据→AI→验收），<span style={{ color: '#FCD34D' }}>任何人一句话即可复刻整套工作台</span></Text>
+    </Box>
+  </Box>
+
+  <Box style={{ marginTop: 16, flexDirection: 'row', gap: 16 }}>
+    {[
+      '注册留痕：Validate + Register 双脚本，时间戳可验',
+      '头像统一：WorkBuddy 现场生成，风格一致',
+      '定义透明：4 个成员 MD 全部可读可改',
+    ].map((t) => (
+      <Box key={t} style={{ flex: 1, padding: '13px 16px', borderRadius: 10, background: 'rgba(16,26,46,0.9)', border: '1px solid #1E3A5F', alignItems: 'center' }}>
+        <Text style={{ fontSize: 13.5, color: '#7DD3FC', textAlign: 'center' }}>{t}</Text>
+      </Box>
+    ))}
+  </Box>
+</Slide>

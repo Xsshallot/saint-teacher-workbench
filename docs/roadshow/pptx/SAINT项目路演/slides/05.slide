@@ -1,0 +1,45 @@
+<Slide style={{ width: 1280, height: 720, background: '#0B1220', flexDirection: 'column', padding: '28px 60px 0' }}>
+  <Text style={{ fontSize: 34, fontWeight: 'bold', color: '#F8FAFC' }}>连接器 + 自动化：数据自己走进来</Text>
+  <Text style={{ fontSize: 15, color: '#64748B', marginTop: 6 }}>WorkBuddy 连接器零代码授权 · 每日定时同步 · 全程日志留痕</Text>
+
+  <Box style={{ flexDirection: 'row', gap: 24, marginTop: 30 }}>
+    <Box style={{ width: 660 }}>
+      {[
+        { n: '腾讯问卷', d: '学员每周反馈 · 2 份实时答卷回流', tag: 'tencent-survey' },
+        { n: '腾讯文档', d: '11 份文档资料 · 清单/表格/收集表', tag: 'tencent-docs' },
+        { n: '腾讯会议', d: '22 场课 · 8 份智能纪要 · 发言人即出勤', tag: 'tmeet' },
+      ].map((c) => (
+        <Box key={c.n} style={{ flexDirection: 'row', alignItems: 'center', background: 'rgba(16,26,46,0.9)', border: '1px solid #1E3A5F', borderRadius: 12, padding: '26px 24px', marginBottom: 18 }}>
+          <Box style={{ width: 8, height: 44, borderRadius: 4, background: '#5B84FA', marginRight: 18 }} />
+          <Box style={{ flex: 1 }}>
+            <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#F8FAFC' }}>{c.n}</Text>
+            <Text style={{ fontSize: 14, color: '#94A3B8', marginTop: 5 }}>{c.d}</Text>
+          </Box>
+          <Text style={{ fontSize: 13, color: '#22D3EE', fontFamily: 'JetBrains Mono, Consolas' }}>{c.tag}</Text>
+        </Box>
+      ))}
+      <Box style={{ marginTop: 16, padding: '20px 22px', borderRadius: 10, background: 'rgba(34,211,238,0.06)', border: '1px solid rgba(34,211,238,0.3)' }}>
+        <Text style={{ fontSize: 14.5, color: '#7DD3FC', lineHeight: 1.5 }}>
+          会议纪要里连「谁发了言」都有 —— <span style={{ fontWeight: 'bold' }}>AI 纪要自动变成点名册</span>，这是最惊喜的连接器红利
+        </Text>
+      </Box>
+    </Box>
+
+    <Box style={{ flex: 1, background: 'rgba(16,26,46,0.9)', border: '1px solid #1E3A5F', borderRadius: 14, padding: '22px 26px' }}>
+      <Text style={{ fontSize: 18, fontWeight: 'bold', color: '#F8FAFC' }}>⏰ 每天早上，自动执行</Text>
+      <Box style={{ marginTop: 16, padding: '14px 18px', borderRadius: 10, background: '#0D1830', borderLeft: '3px solid #22D3EE' }}>
+        <Text style={{ fontSize: 15.5, color: '#67E8F9', fontWeight: 'bold' }}>06:00 · local-import</Text>
+        <Text style={{ fontSize: 13, color: '#94A3B8', marginTop: 4 }}>存量采集数据 → 学员/作业/纪要入库</Text>
+      </Box>
+      <Box style={{ marginTop: 12, padding: '14px 18px', borderRadius: 10, background: '#0D1830', borderLeft: '3px solid #22D3EE' }}>
+        <Text style={{ fontSize: 15.5, color: '#67E8F9', fontWeight: 'bold' }}>06:30 · tencent-sync</Text>
+        <Text style={{ fontSize: 13, color: '#94A3B8', marginTop: 4 }}>问卷答卷/会议/文档 → 增量幂等同步</Text>
+      </Box>
+      <Box style={{ marginTop: 16 }}>
+        <Text style={{ fontSize: 14, color: '#CBD5E1' }}>✓ 同步日志全留痕（success/failed）</Text>
+        <Text style={{ fontSize: 14, color: '#CBD5E1', marginTop: 6 }}>✓ 幂等设计，可重复执行不出错</Text>
+        <Text style={{ fontSize: 14, color: '#CBD5E1', marginTop: 6 }}>✓ 服务端调度 + CLI 双通道</Text>
+      </Box>
+    </Box>
+  </Box>
+</Slide>

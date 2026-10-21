@@ -1,0 +1,7 @@
+<Slide style={{ width: 1280, height: 720, background: '#0B1220', flexDirection: 'column', padding: '24px 40px 0' }}>
+  <Box style={{ flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'space-between' }}>
+    <Text style={{ fontSize: 34, fontWeight: 'bold', color: '#F8FAFC' }}>WorkBuddy 工作流全景</Text>
+    <Text style={{ fontSize: 15, color: '#7DD3FC' }}>五层结构 · 全部长在 WorkBuddy 上 · 人工判断贯穿</Text>
+  </Box>
+  <Image src="assets/workflow.jpg" style={{ width: 1200, height: 620, marginTop: 12, borderRadius: 14, border: '1px solid #1E3A5F', objectFit: 'cover' }} />
+</Slide>

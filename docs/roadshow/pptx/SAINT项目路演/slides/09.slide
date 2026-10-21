@@ -1,0 +1,26 @@
+<Slide style={{ width: 1280, height: 720, background: '#0B1220', position: 'relative', padding: 0, overflow: 'hidden' }}>
+  <Box style={{ position: 'absolute', top: 0, left: 0, width: 1280, height: 720, background: 'radial-gradient(ellipse at center, rgba(91,132,250,0.12) 0%, rgba(11,18,32,0) 60%)' }} />
+  <Box style={{ position: 'absolute', top: 120, left: 0, width: 1280, alignItems: 'center' }}>
+    <Box style={{ padding: '8px 30px', borderRadius: 9999, border: '1px solid #F59E0B', background: 'rgba(26,21,8,0.9)' }}>
+      <Text style={{ fontSize: 17, color: '#FCD34D', letterSpacing: 5 }}>⏱ 现场演示 · 接下来 3 分钟</Text>
+    </Box>
+    <Text style={{ fontSize: 46, fontWeight: 'bold', color: '#F8FAFC', marginTop: 28, textAlign: 'center' }}>不是放录屏 —— 是现在、在这里、用 WorkBuddy 现场搭建</Text>
+  </Box>
+
+  <Box style={{ position: 'absolute', top: 330, left: 90, width: 1100, flexDirection: 'row', gap: 22 }}>
+    {[
+      { n: '演示 ①', t: 'SAINT 助教团', d: '专家中心一句话转化 → 4 成员阵容 → 现场提问看多角色协作 → 注册记录时间戳可验', c: '#5B84FA' },
+      { n: '演示 ②', t: '工作台开发团', d: '现场让它指导"从零搭建" → 四阶段串行调度 → 系统会自我复制', c: '#F59E0B' },
+    ].map((d) => (
+      <Box key={d.n} style={{ flex: 1, background: 'rgba(16,26,46,0.9)', border: '1px solid #1E3A5F', borderRadius: 14, padding: '40px 30px', borderLeft: '4px solid ' + d.c }}>
+        <Text style={{ fontSize: 15, color: d.c, letterSpacing: 2 }}>{d.n}</Text>
+        <Text style={{ fontSize: 24, fontWeight: 'bold', color: '#F8FAFC', marginTop: 10 }}>{d.t}</Text>
+        <Text style={{ fontSize: 15, color: '#94A3B8', marginTop: 14, lineHeight: 1.7 }}>{d.d}</Text>
+      </Box>
+    ))}
+  </Box>
+  <Box style={{ position: 'absolute', bottom: 60, left: 90, width: 1100, padding: '16px 24px', borderRadius: 12, background: 'rgba(16,26,46,0.9)', border: '1px dashed #334155' }}>
+    <Text style={{ fontSize: 14.5, color: '#94A3B8', textAlign: 'center' }}>兜底预案：若现场网络受限，改由终端展示专家包定义文件与注册日志 —— 证据同效，过程更硬核</Text>
+  </Box>
+  <Text style={{ position: 'absolute', bottom: 22, left: 60, fontSize: 14, color: '#475569' }}>（此页停留 3 分钟，切换 WorkBuddy 现场操作）</Text>
+</Slide>

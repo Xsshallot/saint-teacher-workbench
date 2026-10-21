@@ -1,0 +1,26 @@
+<Slide style={{ width: 1280, height: 720, background: '#0B1220', flexDirection: 'column', padding: '28px 60px 0' }}>
+  <Text style={{ fontSize: 34, fontWeight: 'bold', color: '#F8FAFC' }}>后续使用：它已经在每天运行</Text>
+  <Text style={{ fontSize: 15, color: '#64748B', marginTop: 6 }}>不是为比赛做的 —— 是我每天的真实工作方式</Text>
+
+  <Box style={{ flexDirection: 'row', gap: 22, marginTop: 40 }}>
+    {[
+      { time: '每天 06:00', t: '数据自动进仓', d: '两路同步任务把问卷答卷、会议纪要、文档清单汇入本地库，日志留痕可审计', icon: '⏰', c: '#22D3EE' },
+      { time: '每天全天', t: '随口就问', d: '助教团常驻 WorkBuddy：学情、备课、关怀随口一问，答案来自真实数据', icon: '💬', c: '#5B84FA' },
+      { time: '每周每课', t: '知识自动沉淀', d: '课后纪要自动入库，越用越懂这个班；大屏随时投屏复盘', icon: '📚', c: '#FBBF24' },
+    ].map((c) => (
+      <Box key={c.t} style={{ flex: 1, background: 'rgba(16,26,46,0.9)', border: '1px solid #1E3A5F', borderRadius: 16, padding: '36px 30px' }}>
+        <Text style={{ fontSize: 40 }}>{c.icon}</Text>
+        <Text style={{ fontSize: 17, color: c.c, fontWeight: 'bold', marginTop: 14 }}>{c.time}</Text>
+        <Text style={{ fontSize: 21, fontWeight: 'bold', color: '#F8FAFC', marginTop: 10 }}>{c.t}</Text>
+        <Text style={{ fontSize: 14.5, color: '#94A3B8', marginTop: 12, lineHeight: 1.6 }}>{c.d}</Text>
+      </Box>
+    ))}
+  </Box>
+
+  <Box style={{ marginTop: 38, padding: '24px 28px', borderRadius: 12, background: 'rgba(34,211,238,0.06)', border: '1px solid rgba(34,211,238,0.3)' }}>
+    <Text style={{ fontSize: 16, color: '#7DD3FC', lineHeight: 1.7 }}>
+      这套系统已整理为<span style={{ fontWeight: 'bold' }}>开源仓库</span>：完整搭建引导 Skill + 双专家团模板 + 全部工作流，任何人打开 WorkBuddy 说一句话，明天就能拥有自己的版本
+    </Text>
+    <Text style={{ fontSize: 14, color: '#64748B', marginTop: 10 }}>—— 开源相关细节可在 Q&A 环节展开，欢迎交流复刻经验</Text>
+  </Box>
+</Slide>

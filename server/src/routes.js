@@ -240,10 +240,10 @@ function activity({ student_id = '', course_id = '' } = {}) {
   // 周度趋势（提交 + 出勤）
   let subSql = `SELECT submitted_at AS at FROM asg_submission WHERE is_deleted=0 AND submitted_at IS NOT NULL`;
   let attSql = `SELECT m.start_time AS at FROM mtg_attendance a JOIN mtg_record m ON a.meeting_id=m.id WHERE a.is_deleted=0 AND m.start_time IS NOT NULL`;
-  if (student_id) { subSql += ` AND student_id=?`; attSql += ` AND a.student_id=?`; args.push(student_id, student_id); }
+  if (student_id) { subSql += ` AND student_id=?`; attSql += ` AND a.student_id=?`; }
   const weekly = {};
-  for (const r of all(subSql, ...args)) { const w = weekKey(r.at); weekly[w] = weekly[w] || { week: w, submissions: 0, attendance: 0 }; weekly[w].submissions++; }
-  for (const r of all(attSql, ...args)) { const w = weekKey(r.at); weekly[w] = weekly[w] || { week: w, submissions: 0, attendance: 0 }; weekly[w].attendance++; }
+  for (const r of all(subSql, ...(student_id ? [student_id] : []))) { const w = weekKey(r.at); weekly[w] = weekly[w] || { week: w, submissions: 0, attendance: 0 }; weekly[w].submissions++; }
+  for (const r of all(attSql, ...(student_id ? [student_id] : []))) { const w = weekKey(r.at); weekly[w] = weekly[w] || { week: w, submissions: 0, attendance: 0 }; weekly[w].attendance++; }
   // 按课次（课程维度）
   const byLesson = all(`
     SELECT l.id, l.title, l.lesson_date, l.order_no,

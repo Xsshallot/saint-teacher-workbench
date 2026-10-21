@@ -1,0 +1,12 @@
+<Slide style={{ width: 1280, height: 720, background: '#0B1220', position: 'relative', padding: 0, overflow: 'hidden' }}>
+  <Box style={{ position: 'absolute', top: -200, left: 200, width: 880, height: 880, borderRadius: 9999, background: 'radial-gradient(circle, rgba(91,132,250,0.18) 0%, rgba(11,18,32,0) 65%)' }} />
+  <Box style={{ position: 'absolute', top: 150, left: 0, width: 1280, alignItems: 'center' }}>
+    <Image src="assets/logo.jpg" style={{ width: 96, height: 96, borderRadius: 18, border: '2px solid #1E3A5F' }} />
+    <Text style={{ fontSize: 50, fontWeight: 'bold', marginTop: 44, textAlign: 'center', lineHeight: 1.4, color: '#F8FAFC' }}>
+      每个教师，都值得拥有
+      <br />
+      一支<span style={{ backgroundImage: 'linear-gradient(135deg, #5B84FA 0%, #22D3EE 100%)', backgroundClip: 'text', color: 'transparent' }}> AI 教学团队</span>
+    </Text>
+    <Text style={{ fontSize: 18, color: '#64748B', marginTop: 40, letterSpacing: 3 }}>我做到了 · 你也一样 · 谢谢大家</Text>
+  </Box>
+</Slide>

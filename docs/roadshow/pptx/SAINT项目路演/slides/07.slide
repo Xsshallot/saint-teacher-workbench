@@ -1,0 +1,17 @@
+<Slide style={{ width: 1280, height: 720, background: '#0B1220', flexDirection: 'column', padding: '28px 60px 0' }}>
+  <Text style={{ fontSize: 34, fontWeight: 'bold', color: '#F8FAFC' }}>讲课数据大屏：直播与复盘的作战室</Text>
+  <Text style={{ fontSize: 15, color: '#64748B', marginTop: 6 }}>全屏深色 · 30 秒自动刷新 · 学员愿望实时轮播</Text>
+
+  <Image src="assets/shot-screen.jpg" style={{ width: 1160, height: 500, marginTop: 16, borderRadius: 14, border: '1px solid #1E3A5F', objectFit: 'cover' }} />
+  <Box style={{ flexDirection: 'row', gap: 14, marginTop: 14 }}>
+    {[
+      { n: '48', l: '学员总数' }, { n: '21', l: '近 30 天活跃' }, { n: '10', l: '课堂出勤人次' },
+      { n: '4.5', l: '平均满意度' }, { n: '100', l: 'NPS' }, { n: '30s', l: '自动刷新' },
+    ].map((x) => (
+      <Box key={x.l} style={{ flex: 1, alignItems: 'center', padding: '12px 0', borderRadius: 10, background: 'rgba(16,26,46,0.9)', border: '1px solid #1E3A5F' }}>
+        <Text style={{ fontSize: 24, fontWeight: 'bold', color: '#FBBF24', fontFamily: 'JetBrains Mono, Consolas' }}>{x.n}</Text>
+        <Text style={{ fontSize: 12.5, color: '#94A3B8', marginTop: 2 }}>{x.l}</Text>
+      </Box>
+    ))}
+  </Box>
+</Slide>

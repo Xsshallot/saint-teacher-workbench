@@ -1,0 +1,33 @@
+<Slide style={{ width: 1280, height: 720, background: '#0B1220', flexDirection: 'column', padding: '28px 60px 0' }}>
+  <Text style={{ fontSize: 34, fontWeight: 'bold', color: '#F8FAFC' }}>真实困境：46 名学员，5 个平台，0 个全景</Text>
+  <Text style={{ fontSize: 15, color: '#64748B', marginTop: 6 }}>AI 前沿营 · 小龙虾训练营 · 2026.06 - 10 · 全部数据来自真实教学业务</Text>
+
+  <Box style={{ flexDirection: 'row', gap: 20, marginTop: 40 }}>
+    {[
+      { n: '46', u: '名学员', t: '4 个月训练营', d: '每个人的学习痕迹散落在 5 个地方：作业问卷、学习清单、课堂发言、群聊愿望，还有我自己的记忆里', c: '#F8FAFC' },
+      { n: '5', u: '个数据平台', t: '问卷 · 文档 · 会议 · 群 · 记忆', d: '数据每天在产生，也每天在失联——没有一条链路能把它们串起来', c: '#22D3EE' },
+      { n: '0', u: '个全景视图', t: '谁在掉队 · 想学什么 · 满意与否', d: '等我发现时，学员已经悄悄掉队——这是最让我难受的事', c: '#FBBF24' },
+    ].map((s) => (
+      <Box key={s.u} style={{ flex: 1, background: 'rgba(16,26,46,0.9)', border: '1px solid #1E3A5F', borderRadius: 16, padding: '36px 32px' }}>
+        <Box style={{ flexDirection: 'row', alignItems: 'flex-end', gap: 10 }}>
+          <Text style={{ fontSize: 112, fontWeight: 'bold', lineHeight: 1, color: s.c, fontFamily: 'JetBrains Mono, Consolas' }}>{s.n}</Text>
+          <Text style={{ fontSize: 22, color: '#94A3B8', paddingBottom: 14 }}>{s.u}</Text>
+        </Box>
+        <Text style={{ fontSize: 17, color: '#CBD5E1', marginTop: 24, fontWeight: 'bold' }}>{s.t}</Text>
+        <Text style={{ fontSize: 15, color: '#64748B', marginTop: 12, lineHeight: 1.6 }}>{s.d}</Text>
+      </Box>
+    ))}
+  </Box>
+
+  <Box style={{ marginTop: 34, flexDirection: 'row', gap: 14 }}>
+    {[
+      '跟不过来 —— 发现掉队平均晚一周',
+      '备课靠猜 —— 学员想学什么全凭印象',
+      '满意度失明 —— 要到结营才从流失率倒推',
+    ].map((t) => (
+      <Box key={t} style={{ flex: 1, padding: '16px 18px', borderRadius: 10, background: 'rgba(251,191,36,0.08)', border: '1px solid rgba(251,191,36,0.35)' }}>
+        <Text style={{ fontSize: 16, color: '#FBBF24', fontWeight: 'bold' }}>{t}</Text>
+      </Box>
+    ))}
+  </Box>
+</Slide>

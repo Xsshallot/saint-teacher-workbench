@@ -1,0 +1,38 @@
+<Slide style={{ width: 1280, height: 720, background: '#0B1220', flexDirection: 'column', padding: '28px 60px 0' }}>
+  <Text style={{ fontSize: 34, fontWeight: 'bold', color: '#F8FAFC' }}>前后对比：从数据搬运工，回到教师本身</Text>
+
+  <Box style={{ marginTop: 30 }}>
+    <Box style={{ flexDirection: 'row', background: 'rgba(91,132,250,0.12)', borderRadius: '10px 10px 0 0', padding: '15px 24px' }}>
+      <Text style={{ fontSize: 16, fontWeight: 'bold', color: '#93C5FD', width: 200 }}>维度</Text>
+      <Text style={{ fontSize: 16, fontWeight: 'bold', color: '#94A3B8', width: 420 }}>搭建前</Text>
+      <Text style={{ fontSize: 16, fontWeight: 'bold', color: '#FBBF24' }}>现在（WorkBuddy 驱动）</Text>
+    </Box>
+    {[
+      { k: '学员动态', a: '发现掉队平均晚一周', b: '每日自动同步，开口即问' },
+      { k: '备课依据', a: '凭印象判断', b: '愿望聚类 + 纪要检索，数据说话' },
+      { k: '满意度感知', a: '结营才从流失率倒推', b: '实时 4.5 分 · NPS 100' },
+      { k: '课堂知识', a: '纪要散落各处无人回看', b: '知识库全文检索，一搜即得' },
+      { k: '我的角色', a: '数据搬运工', b: '只做判断和讲课' },
+    ].map((r) => (
+      <Box key={r.k} style={{ flexDirection: 'row', padding: '17px 24px', borderBottom: '1px solid #1E3A5F', background: 'rgba(16,26,46,0.6)' }}>
+        <Text style={{ fontSize: 15.5, fontWeight: 'bold', color: '#F8FAFC', width: 200 }}>{r.k}</Text>
+        <Text style={{ fontSize: 15, color: '#94A3B8', width: 420 }}>{r.a}</Text>
+        <Text style={{ fontSize: 15, color: '#FBBF24' }}>{r.b}</Text>
+      </Box>
+    ))}
+  </Box>
+
+  <Box style={{ marginTop: 30, flexDirection: 'row', alignItems: 'center', gap: 14, background: 'rgba(91,132,250,0.08)', border: '1px solid rgba(91,132,250,0.4)', borderRadius: 12, padding: '22px 26px' }}>
+    <Text style={{ fontSize: 15.5, color: '#7DD3FC', lineHeight: 1.6 }}>
+      这不是演示道具 —— <span style={{ fontWeight: 'bold' }}>明天早上六点，它还会自己再跑一遍</span>。真实使用，每天都在发生。
+    </Text>
+  </Box>
+
+  <Box style={{ marginTop: 16, flexDirection: 'row', gap: 16 }}>
+    {['同步日志可审计', '工作流图可复现', '专家团可现场重建', '问答可当场验'].map((t) => (
+      <Box key={t} style={{ flex: 1, padding: '13px 10px', borderRadius: 10, background: 'rgba(16,26,46,0.9)', border: '1px solid #1E3A5F', alignItems: 'center' }}>
+        <Text style={{ fontSize: 14, color: '#7DD3FC', textAlign: 'center' }}>✓ {t}</Text>
+      </Box>
+    ))}
+  </Box>
+</Slide>
