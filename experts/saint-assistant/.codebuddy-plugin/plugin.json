@@ -1,0 +1,69 @@
+{
+  "name": "saint-assistant",
+  "version": "1.0.0",
+  "description": "SAINT teacher workbench assistant - query students, courses, assignments, minutes and satisfaction via natural language",
+  "author": {
+    "name": "SAINT Teacher Workbench"
+  },
+  "homepage": "https://github.com/Xsshallot/saint-teacher-workbench",
+  "license": "MIT",
+  "keywords": [
+    "saint",
+    "teacher",
+    "assistant",
+    "education",
+    "workbench"
+  ],
+  "agents": [
+    "./agents/saint-assistant.md"
+  ],
+  "expertType": "agent",
+  "agentName": "saint-assistant",
+  "displayName": {
+    "en": "SAINT Teaching Assistant",
+    "zh": "SAINT 助教"
+  },
+  "profession": {
+    "en": "Teaching Assistant",
+    "zh": "专属助教"
+  },
+  "displayDescription": {
+    "en": "Connects to your SAINT teacher workbench: query students, assignments, meeting minutes and satisfaction in natural language, and helps with lesson prep.",
+    "zh": "接入 SAINT 教师工作台，自然语言查询学员动态、作业、纪要与满意度，智能辅助备课与学员跟进。"
+  },
+  "avatar": "avatars/expert.jpg",
+  "categoryId": "09-OperationsHR",
+  "defaultInitPrompt": {
+    "zh": "最近学员们整体怎么样？",
+    "en": "How are my students doing recently?"
+  },
+  "plugin": "saint-assistant",
+  "tags": [
+    {
+      "en": "Student Tracking",
+      "zh": "学员跟进"
+    },
+    {
+      "en": "Lesson Preparation",
+      "zh": "备课辅助"
+    },
+    {
+      "en": "Teaching Data Analysis",
+      "zh": "教学数据分析"
+    }
+  ],
+  "quickPrompts": [
+    {
+      "en": "How are my students doing recently?",
+      "zh": "最近学员们整体怎么样？"
+    },
+    {
+      "en": "What should I prepare for the next lesson?",
+      "zh": "下节课该准备什么？"
+    },
+    {
+      "en": "Who needs my attention most?",
+      "zh": "谁需要重点跟进？"
+    }
+  ]
+}
