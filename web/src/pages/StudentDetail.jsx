@@ -2,12 +2,13 @@ import React from 'react';
 import { DirectInbox, MessageQuestion, Warning2, InfoCircle, Flag } from 'iconsax-react';
 import { Link } from '../router.jsx';
 import { api } from '../api.js';
-import { Card, Avatar, Badge, Loading, Empty, useApi, fmtDate } from '../components/ui.jsx';
+import { Card, Avatar, Badge, Loading, Empty, LineChart, useApi, fmtDate } from '../components/ui.jsx';
 
 const typeIcon = { submission: DirectInbox, wish: MessageQuestion, followup: Warning2 };
 
 export default function StudentDetail({ id }) {
   const { loading, data, error } = useApi(() => api.student(id));
+  const act = useApi(() => api.activity({ student_id: id }));
 
   if (loading) return <Loading />;
   if (error || !data) return <Empty text="未找到该学员" />;
@@ -53,6 +54,18 @@ export default function StudentDetail({ id }) {
           <Link to="/students" className="text-sm text-primary-600 hover:underline">← 返回列表</Link>
         </div>
       </div>
+
+      {/* 个人活跃度趋势 */}
+      {(act.data?.weekly || []).length > 1 && (
+        <Card title="个人活跃度趋势（提交 + 出勤）" extra={
+          <div className="flex items-center gap-3 text-[10px] text-slate-400">
+            <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-[#5B84FA]" />提交</span>
+            <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-emerald-400" />出勤</span>
+          </div>
+        }>
+          <LineChart data={act.data.weekly.slice(-16).map((w) => ({ label: w.week.slice(5), submissions: w.submissions, attendance: w.attendance }))} series={['submissions', 'attendance']} />
+        </Card>
+      )}
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* 时间线 */}

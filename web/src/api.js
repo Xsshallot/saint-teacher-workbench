@@ -23,6 +23,13 @@ export const api = {
   },
   feedback: (theme = '') => req(`/api/feedback?theme=${encodeURIComponent(theme)}`),
   documents: (docType = '') => req(`/api/documents?doc_type=${encodeURIComponent(docType)}`),
+  activity: (params = {}) => {
+    const s = new URLSearchParams(Object.entries(params).filter(([, v]) => v !== '' && v != null));
+    return req(`/api/activity?${s}`);
+  },
+  satisfaction: () => req('/api/satisfaction'),
+  minutesSearch: (q = '') => req(`/api/minutes/search?q=${encodeURIComponent(q)}`),
+  minuteDetail: (id) => req(`/api/minutes/${id}`),
   syncStatus: () => req('/api/sync/status'),
   syncRun: () => req('/api/sync/run', { method: 'POST', body: '{}' }),
 };

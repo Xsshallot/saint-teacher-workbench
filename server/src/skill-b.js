@@ -14,6 +14,9 @@ export function generateSkillB(baseUrl) {
     { m: 'GET', p: '/api/submissions?assignment_id=&student_id=&status=', d: '作业提交明细（状态、摘要、附件数）' },
     { m: 'GET', p: '/api/feedback?theme=', d: '反馈墙：下节课愿望 + 主题聚类' },
     { m: 'GET', p: '/api/documents?doc_type=', d: '腾讯文档资料列表（最近同步的文档/表格/收集表）' },
+    { m: 'GET', p: '/api/activity?student_id=&course_id=', d: '出勤与活跃度趋势：周度（提交+出勤）与按课次聚合' },
+    { m: 'GET', p: '/api/satisfaction', d: '满意度/NPS：评分趋势（5分制）、NPS 分群与得分' },
+    { m: 'GET', p: '/api/minutes/search?q=', d: '课堂纪要知识库全文检索（回答"这节课讲了什么"）' },
     { m: 'GET', p: '/api/sync/status', d: '数据源与同步任务状态、最近同步日志' },
     { m: 'GET', p: '/api/contract', d: '数据契约（各数据域字段定义）' },
   ];

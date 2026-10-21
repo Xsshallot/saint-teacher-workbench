@@ -20,6 +20,8 @@ db.exec(fs.readFileSync(path.join(__dirname, 'schema.sql'), 'utf8'));
 
 // 轻量迁移：为已存在的旧库补列（幂等）
 try { db.exec(`ALTER TABLE asg_followup ADD COLUMN source TEXT DEFAULT 'local-import'`); } catch { /* 列已存在 */ }
+try { db.exec(`ALTER TABLE mtg_record ADD COLUMN full_minutes TEXT`); } catch { /* 列已存在 */ }
+try { db.exec(`ALTER TABLE mtg_record ADD COLUMN speakers TEXT`); } catch { /* 列已存在 */ }
 
 const plain = (r) => (r === undefined || r === null ? undefined : JSON.parse(JSON.stringify(r)));
 

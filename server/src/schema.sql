@@ -121,6 +121,8 @@ CREATE TABLE IF NOT EXISTS mtg_record (
   duration_min  INTEGER,
   has_minutes   INTEGER DEFAULT 0,             -- 是否已取到智能纪要
   summary       TEXT,                          -- 纪要摘要
+  full_minutes  TEXT,                          -- 纪要全文（知识库检索用）
+  speakers      TEXT,                          -- 发言人 JSON 数组（出勤依据）
   lesson_id     INTEGER,                       -- 关联课次
   source        TEXT DEFAULT 'local-import',
   create_by     TEXT DEFAULT 'system',

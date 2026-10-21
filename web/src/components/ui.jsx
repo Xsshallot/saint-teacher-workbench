@@ -117,6 +117,43 @@ export function BarChart({ data = [], height = 160, color = '#5B84FA' }) {
   );
 }
 
+/** 简单 SVG 折线图（多系列，含网格与数值提示） */
+export function LineChart({ data = [], height = 180, series = [], colors = ['#5B84FA', '#34d399'] }) {
+  // data: [{ label, ...seriesKey: value }]
+  if (!data.length) return <Empty />;
+  const max = Math.max(1, ...data.flatMap((d) => series.map((s) => d[s] || 0)));
+  const W = 100, H = height - 26;
+  const x = (i) => (i / Math.max(1, data.length - 1)) * W;
+  const y = (v) => H - (v / max) * (H - 8) - 4;
+  return (
+    <div>
+      <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none" className="w-full" style={{ height: H }}>
+        {[0.25, 0.5, 0.75].map((g) => (
+          <line key={g} x1="0" x2={W} y1={H * g} y2={H * g} stroke="#e2e8f0" strokeWidth="0.4" />
+        ))}
+        {series.map((s, si) => (
+          <g key={s}>
+            <polyline
+              fill="none" stroke={colors[si % colors.length]} strokeWidth="1.2" strokeLinejoin="round" strokeLinecap="round"
+              points={data.map((d, i) => `${x(i)},${y(d[s] || 0)}`).join(' ')}
+            />
+            {data.map((d, i) => (
+              <circle key={i} cx={x(i)} cy={y(d[s] || 0)} r="1" fill={colors[si % colors.length]}>
+                <title>{`${d.label} ${s}: ${d[s] || 0}`}</title>
+              </circle>
+            ))}
+          </g>
+        ))}
+      </svg>
+      <div className="flex justify-between text-[10px] text-slate-400 mt-1">
+        {data.map((d, i) => (
+          <span key={i} className={i > 0 && i < data.length - 1 && i % 2 === 0 ? 'hidden sm:inline' : ''}>{d.label}</span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 /** 通用 hooks */
 export function useApi(fn, deps = []) {
   const [state, setState] = useState({ loading: true, data: null, error: null });

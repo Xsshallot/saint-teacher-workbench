@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Category, Profile2User, Teacher, TaskSquare, MessageText, Setting2, Menu } from 'iconsax-react';
+import { Category, Profile2User, Teacher, TaskSquare, MessageText, Setting2, Menu, VideoVertical } from 'iconsax-react';
 import Dashboard from './pages/Dashboard.jsx';
 import Students from './pages/Students.jsx';
 import StudentDetail from './pages/StudentDetail.jsx';
@@ -7,6 +7,7 @@ import Courses from './pages/Courses.jsx';
 import Assignments from './pages/Assignments.jsx';
 import Feedback from './pages/Feedback.jsx';
 import Settings from './pages/Settings.jsx';
+import Screen from './pages/Screen.jsx';
 
 /** 极简 hash 路由 */
 function useHashRoute() {
@@ -33,7 +34,8 @@ export default function App() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   let page;
-  if (route.startsWith('/students/')) {
+  if (route.startsWith('/screen')) return <Screen />;
+  else if (route.startsWith('/students/')) {
     page = <StudentDetail id={route.split('/')[2]} />;
   } else if (route.startsWith('/students')) page = <Students />;
   else if (route.startsWith('/courses')) page = <Courses />;
@@ -93,6 +95,10 @@ export default function App() {
           <div className="ml-auto text-xs text-slate-400 hidden sm:block">
             数据由问卷 / 会议连接器每日自动同步
           </div>
+          <a href="#/screen" target="_blank" rel="noreferrer" className="ml-4 hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-900 text-white text-xs hover:bg-primary-600 transition-colors">
+            <VideoVertical variant="Linear" size={15} color="#94a3b8" />
+            数据大屏
+          </a>
         </header>
         <main className="flex-1 p-4 lg:p-8 max-w-[1400px] w-full mx-auto">{page}</main>
       </div>

@@ -34,6 +34,14 @@ const summaryOf = (minute) => {
   return m ? m[1].trim() : minute.slice(0, 200);
 };
 
+/** 从纪要全文解析发言人（真实出勤依据） */
+const speakersOf = (minute) => {
+  if (!minute) return [];
+  const m = minute.match(/发言人：(.+?)(?:\n|$)/s);
+  if (!m) return [];
+  return m[1].split(/[、,，\s]+/).map((x) => x.trim()).filter(Boolean);
+};
+
 const clean = (s) => (typeof s === 'string' ? s.trim() : '');
 const norm = (s) => clean(s).toLowerCase().replace(/[\s\u3000]/g, '');
 
@@ -167,21 +175,26 @@ export async function runImport() {
     l.codes.forEach((c) => lessonIdByCode.set(c, id));
   });
 
-  // 3) 会议记录（训练营相关）
+  // 3) 会议记录（训练营相关，含纪要全文与发言人）
   let meetingCount = 0;
+  const pendingAttendance = [];
   const lines = fs.readFileSync(path.join(RAW, 'meetings_all.txt'), 'utf8').split(/\r?\n/).filter((l) => l.includes('|'));
   for (const line of lines) {
     const [start, subject, code, rec, perm] = line.split('|').map((x) => clean(x));
     const isCamp = CAMP_MEETING_RE.test(subject) || CAMP_MEETING_CODES.has(code);
     if (!isCamp) continue;
     const minutes = (MINUTE_FILES[code] || []).map((f) => readMinutes(f)).filter(Boolean);
-    insert('mtg_record', {
+    const full = minutes[0] || null;
+    const speakers = speakersOf(full);
+    const mtgId = insert('mtg_record', {
       meeting_code: code, subject, start_time: (start || '').slice(0, 19),
       duration_min: null, has_minutes: minutes.length ? 1 : 0,
       summary: minutes.length ? summaryOf(minutes[0]) : null,
+      full_minutes: full, speakers,
       lesson_id: lessonIdByCode.get(code) || null,
     });
     meetingCount++;
+    pendingAttendance.push({ mtgId, speakers });
   }
 
   // 4) 问卷 → 学员 / 作业 / 提交 / 反馈
@@ -338,6 +351,17 @@ export async function runImport() {
     });
     stuIdByKey.set(norm(s.nickname), id);
   }
+  // 5.1) 出勤：纪要发言人匹配学员（真实参与依据）
+  let attendanceCount = 0;
+  for (const { mtgId, speakers } of pendingAttendance) {
+    for (const sp of speakers) {
+      const stu = all(`SELECT id FROM stu_profile WHERE nickname=? OR real_name=? OR nickname LIKE ?`, sp, sp, `%${sp}%`)[0];
+      if (stu) {
+        insert('mtg_attendance', { meeting_id: mtgId, student_id: stu.id, status: '出席并发言' });
+        attendanceCount++;
+      }
+    }
+  }
   // 回填：submission / followup / wish / response 的 student_id（按 nickname raw 匹配）
   const nickToId = new Map();
   for (const [key, s] of students) nickToId.set(key, stuIdByKey.get(key));
@@ -372,6 +396,7 @@ export async function runImport() {
     students: students.size,
     lessons: LESSON_DEFS.length,
     meetings: meetingCount,
+    attendance: attendanceCount,
     assignments: Object.keys(ASSIGNMENT_DEFS).length,
     submissions: get(`SELECT COUNT(*) AS n FROM asg_submission`).n,
     followups: get(`SELECT COUNT(*) AS n FROM asg_followup`).n,

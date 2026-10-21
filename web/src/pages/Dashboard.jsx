@@ -1,11 +1,13 @@
 import React from 'react';
-import { Profile2User, NotificationBing, BookSquare, MessageFavorite } from 'iconsax-react';
+import { Profile2User, NotificationBing, BookSquare, MessageFavorite, Star1, VideoVertical } from 'iconsax-react';
 import { Link } from '../router.jsx';
 import { api } from '../api.js';
-import { Card, StatCard, Badge, Avatar, BarChart, Loading, Empty, useApi, fmtDay } from '../components/ui.jsx';
+import { Card, StatCard, Badge, Avatar, BarChart, LineChart, Loading, Empty, useApi, fmtDay } from '../components/ui.jsx';
 
 export default function Dashboard() {
   const { loading, data, error, reload } = useApi(api.stats);
+  const act = useApi(() => api.activity());
+  const sat = useApi(api.satisfaction);
 
   if (loading) return <Loading />;
   if (error) return <Empty text={`加载失败：${error}`} />;
@@ -22,34 +24,42 @@ export default function Dashboard() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* 周度活跃 */}
-        <Card title="作业提交趋势（近 12 周）" className="lg:col-span-2">
-          <BarChart data={s.weekly_activity} />
+        {/* 周度活跃（提交+出勤） */}
+        <Card title="活跃度趋势（提交 + 出勤）" className="lg:col-span-2" extra={
+          <div className="flex items-center gap-3 text-[10px] text-slate-400">
+            <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-[#5B84FA]" />提交</span>
+            <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-emerald-400" />出勤</span>
+          </div>
+        }>
+          {(act.data?.weekly || []).length ? (
+            <LineChart data={act.data.weekly.slice(-14).map((w) => ({ label: w.week.slice(5), submissions: w.submissions, attendance: w.attendance }))} series={['submissions', 'attendance']} />
+          ) : <BarChart data={s.weekly_activity} />}
         </Card>
 
-        {/* 反馈主题 */}
-        <Card title="下节课愿望 · 主题聚类" extra={<Link to="/feedback" className="text-xs text-primary-600 hover:underline">查看全部 →</Link>}>
-          <div className="space-y-2.5 pt-1">
-            {s.feedback_themes.slice(0, 8).map((t) => {
-              const max = s.feedback_themes[0]?.n || 1;
-              return (
-                <div key={t.theme}>
-                  <div className="flex justify-between text-xs mb-1">
-                    <span className="text-slate-600">{t.theme}</span>
-                    <span className="text-slate-400">{t.n}</span>
-                  </div>
-                  <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
-                    <div className="h-full bg-primary-400 rounded-full" style={{ width: `${(t.n / max) * 100}%` }} />
-                  </div>
+        {/* 满意度 / NPS */}
+        <Card title="满意度 / NPS" extra={<Link to="/feedback" className="text-xs text-primary-600 hover:underline">反馈墙 →</Link>}>
+          {sat.data && sat.data.total ? (
+            <div className="space-y-3 pt-1">
+              <div className="flex items-end gap-4">
+                <div>
+                  <div className="text-3xl font-bold text-slate-800 leading-none">{sat.data.avg ?? '-'}</div>
+                  <div className="text-[10px] text-slate-400 mt-1">平均评分（5 分制 · {sat.data.total} 份）</div>
                 </div>
-              );
-            })}
-            {!s.feedback_themes.length && <Empty />}
-          </div>
+                <div className="ml-auto text-right">
+                  <div className={`text-3xl font-bold leading-none ${(sat.data.nps.score ?? 0) >= 50 ? 'text-emerald-500' : (sat.data.nps.score ?? 0) >= 0 ? 'text-amber-500' : 'text-rose-500'}`}>{sat.data.nps.score ?? '-'}</div>
+                  <div className="text-[10px] text-slate-400 mt-1">NPS</div>
+                </div>
+              </div>
+              {!!sat.data.trend.length && (
+                <LineChart height={90} data={sat.data.trend.map((t) => ({ label: t.date.slice(5), avg: t.avg }))} series={['avg']} colors={['#f59e0b']} />
+              )}
+              <div className="text-[10px] text-slate-400">推荐 {sat.data.nps.promoters} · 中立 {sat.data.nps.passives} · 贬损 {sat.data.nps.detractors}</div>
+            </div>
+          ) : <Empty text="暂无评分数据" />}
         </Card>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* 待跟进名单 */}
         <Card title="需要跟进的学员" extra={<Badge color="rose">{s.pending_follow_count} 人</Badge>}>
           {s.pending_follow.length ? (
@@ -82,6 +92,27 @@ export default function Dashboard() {
             <div className="text-xs text-slate-400">
               下节课：{s.next_lesson ? `${fmtDay(s.next_lesson.lesson_date)} ${s.next_lesson.title}` : '待排期'}
             </div>
+          </div>
+        </Card>
+
+        {/* 反馈主题 */}
+        <Card title="下节课愿望 · 主题聚类">
+          <div className="space-y-2.5 pt-1 max-h-72 overflow-y-auto pr-1">
+            {s.feedback_themes.slice(0, 8).map((t) => {
+              const max = s.feedback_themes[0]?.n || 1;
+              return (
+                <div key={t.theme}>
+                  <div className="flex justify-between text-xs mb-1">
+                    <span className="text-slate-600">{t.theme}</span>
+                    <span className="text-slate-400">{t.n}</span>
+                  </div>
+                  <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
+                    <div className="h-full bg-primary-400 rounded-full" style={{ width: `${(t.n / max) * 100}%` }} />
+                  </div>
+                </div>
+              );
+            })}
+            {!s.feedback_themes.length && <Empty />}
           </div>
         </Card>
       </div>

@@ -106,6 +106,14 @@ export async function runImport() {
         });
         stats.followups++;
       }
+      // 评分 → 满意度数据源（/api/satisfaction）
+      const rating = (a.answers['给课程的整体评分'] || '').trim();
+      if (rating) {
+        insert('fbk_survey_response', {
+          student_id: sid, survey_name: '学员每周反馈', question: '给课程的整体评分',
+          answer: rating, answered_at: a.ended_at, source: 'tencent-import',
+        });
+      }
       // 更新活跃度
       run(`UPDATE stu_profile SET last_active=?, activity_count=activity_count+1 WHERE id=?`, a.ended_at, sid);
     }

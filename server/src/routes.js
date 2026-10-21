@@ -66,6 +66,10 @@ function stats() {
     next_lesson,
     last_lesson,
     classes: [...new Set(students.map((s) => s.class_name || '主线班'))],
+    // 大屏扩展
+    attendance_total: get(`SELECT COUNT(*) AS n FROM mtg_attendance WHERE is_deleted=0`)?.n || 0,
+    satisfaction: (() => { const sat = satisfaction(); return { avg: sat.avg, total: sat.total, nps: sat.nps.score }; })(),
+    recent_wishes: all(`SELECT w.wish_text, w.theme, p.nickname FROM fbk_next_wish w JOIN stu_profile p ON w.student_id=p.id WHERE w.is_deleted=0 ORDER BY w.created_at DESC LIMIT 10`),
   };
 }
 function getNick(id) {
@@ -230,6 +234,86 @@ async function syncRun(jobKey = 'all') {
 }
 // nowStr 已在文件头部定义为 cnNow()（中国时间）
 
+// ---------- 出勤与活跃度趋势 ----------
+function activity({ student_id = '', course_id = '' } = {}) {
+  const args = [];
+  // 周度趋势（提交 + 出勤）
+  let subSql = `SELECT submitted_at AS at FROM asg_submission WHERE is_deleted=0 AND submitted_at IS NOT NULL`;
+  let attSql = `SELECT m.start_time AS at FROM mtg_attendance a JOIN mtg_record m ON a.meeting_id=m.id WHERE a.is_deleted=0 AND m.start_time IS NOT NULL`;
+  if (student_id) { subSql += ` AND student_id=?`; attSql += ` AND a.student_id=?`; args.push(student_id, student_id); }
+  const weekly = {};
+  for (const r of all(subSql, ...args)) { const w = weekKey(r.at); weekly[w] = weekly[w] || { week: w, submissions: 0, attendance: 0 }; weekly[w].submissions++; }
+  for (const r of all(attSql, ...args)) { const w = weekKey(r.at); weekly[w] = weekly[w] || { week: w, submissions: 0, attendance: 0 }; weekly[w].attendance++; }
+  // 按课次（课程维度）
+  const byLesson = all(`
+    SELECT l.id, l.title, l.lesson_date, l.order_no,
+      (SELECT COUNT(*) FROM mtg_attendance a JOIN mtg_record m ON a.meeting_id=m.id WHERE m.lesson_id=l.id AND a.is_deleted=0) AS attendance,
+      (SELECT COUNT(*) FROM asg_submission s JOIN asg_assignment ag ON s.assignment_id=ag.id WHERE ag.course_id=l.course_id AND s.is_deleted=0 AND date(s.submitted_at) BETWEEN date(l.lesson_date, '-3 day') AND date(l.lesson_date, '+4 day')) AS submissions
+    FROM crs_lesson l WHERE l.is_deleted=0 ${course_id ? 'AND l.course_id=' + Number(course_id) : ''}
+    ORDER BY l.lesson_date`).map((x) => ({ ...x, lesson: `第${x.order_no}课` }));
+  // 出勤汇总
+  const totalAttendance = get(`SELECT COUNT(*) AS n FROM mtg_attendance WHERE is_deleted=0`)?.n || 0;
+  const attendedStudents = get(`SELECT COUNT(DISTINCT student_id) AS n FROM mtg_attendance WHERE is_deleted=0`)?.n || 0;
+  return {
+    weekly: Object.values(weekly).sort((a, b) => (a.week < b.week ? -1 : 1)),
+    by_lesson: byLesson,
+    attendance_total: totalAttendance,
+    attended_students: attendedStudents,
+  };
+}
+
+// ---------- 满意度 / NPS ----------
+function satisfaction() {
+  // 评分来自问卷「给课程的整体评分」（5 分制）
+  const rows = all(`SELECT answered_at AS at, answer FROM fbk_survey_response WHERE is_deleted=0 AND question LIKE '%评分%' AND answer IS NOT NULL`);
+  const parsed = rows
+    .map((r) => ({ at: r.at, score: Number((r.answer.match(/([0-5])/) || [])[1]) }))
+    .filter((x) => x.score >= 1 && x.score <= 5)
+    .sort((a, b) => (a.at < b.at ? -1 : 1));
+  const trend = parsed.map((x) => x.at.slice(0, 10));
+  // 按天聚合均值
+  const byDay = {};
+  for (const p of parsed) { byDay[p.at.slice(0, 10)] = byDay[p.at.slice(0, 10)] || { date: p.at.slice(0, 10), sum: 0, n: 0 }; byDay[p.at.slice(0, 10)].sum += p.score; byDay[p.at.slice(0, 10)].n++; }
+  const daily = Object.values(byDay).sort((a, b) => (a.date < b.date ? -1 : 1)).map((d) => ({ date: d.date, avg: Math.round((d.sum / d.n) * 10) / 10, n: d.n }));
+  // NPS（5 分制映射：4-5 推荐者 / 3 中立 / 1-2 贬损者）
+  const promoters = parsed.filter((x) => x.score >= 4).length;
+  const passives = parsed.filter((x) => x.score === 3).length;
+  const detractors = parsed.filter((x) => x.score <= 2).length;
+  const total = parsed.length;
+  return {
+    total,
+    avg: total ? Math.round((parsed.reduce((s, x) => s + x.score, 0) / total) * 10) / 10 : null,
+    trend: daily,
+    nps: {
+      score: total ? Math.round(((promoters - detractors) / total) * 100) : null,
+      promoters, passives, detractors, total,
+    },
+    latest: parsed.slice(-3).map((x) => ({ at: x.at, score: x.score })),
+  };
+}
+
+// ---------- 课堂纪要知识库 ----------
+function minutesSearch({ q = '' } = {}) {
+  const rows = all(`SELECT m.id, m.subject, m.start_time, m.full_minutes, m.summary, l.title AS lesson_title
+    FROM mtg_record m LEFT JOIN crs_lesson l ON m.lesson_id=l.id
+    WHERE m.is_deleted=0 AND m.full_minutes IS NOT NULL ORDER BY m.start_time DESC`);
+  const list = rows.map((r) => {
+    let excerpt = r.summary || '';
+    if (q) {
+      const idx = r.full_minutes.indexOf(q);
+      if (idx >= 0) excerpt = (idx > 40 ? '…' : '') + r.full_minutes.slice(Math.max(0, idx - 40), idx + q.length + 80).replace(/\n/g, ' ') + '…';
+      else if (!r.summary?.includes(q)) return null;
+    }
+    return { id: r.id, subject: r.subject, lesson_title: r.lesson_title, start_time: r.start_time, excerpt, length: r.full_minutes.length };
+  }).filter(Boolean);
+  return { q, total: rows.length, hits: list };
+}
+function minuteDetail(id) {
+  const r = get(`SELECT m.*, l.title AS lesson_title FROM mtg_record m LEFT JOIN crs_lesson l ON m.lesson_id=l.id WHERE m.id=? AND m.is_deleted=0`, id);
+  if (!r) return null;
+  return { ...r, speakers: J(r.speakers) };
+}
+
 // ---------- 路由表 ----------
 export async function handleApi(req, res, pathname, query) {
   const send = (code, body) => {
@@ -257,6 +341,13 @@ export async function handleApi(req, res, pathname, query) {
     if (pathname === '/api/submissions') return send(200, ok(submissions(query)));
     if (pathname === '/api/feedback') return send(200, ok(feedback(query)));
     if (pathname === '/api/documents') return send(200, ok(documents(query)));
+    if (pathname === '/api/activity') return send(200, ok(activity(query)));
+    if (pathname === '/api/satisfaction') return send(200, ok(satisfaction()));
+    if (pathname === '/api/minutes/search') return send(200, ok(minutesSearch(query)));
+    if (pathname.startsWith('/api/minutes/')) {
+      const d = minuteDetail(Number(pathname.split('/')[3]));
+      return d ? send(200, ok(d)) : send(404, fail('minutes not found'));
+    }
     if (pathname === '/api/sync/status') return send(200, ok(syncStatus()));
     if (pathname === '/api/sync/run' && req.method === 'POST') {
       let body = '';
