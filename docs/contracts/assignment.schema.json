@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "saint/assignment/v1",
+  "title": "作业/任务",
+  "type": "object",
+  "required": ["course_id", "title"],
+  "properties": {
+    "id": { "type": "integer" },
+    "course_id": { "type": "integer" },
+    "title": { "type": "string" },
+    "description": { "type": ["string", "null"] },
+    "assigned_date": { "type": ["string", "null"], "format": "date" },
+    "due_date": { "type": ["string", "null"], "format": "date" },
+    "type": { "type": "string", "enum": ["任务提交", "Skill 开发", "问卷", "案例提交"], "description": "作业类型" }
+  }
+}

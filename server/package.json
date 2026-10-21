@@ -1,0 +1,7 @@
+{
+  "name": "saint-server",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "SAINT 工作台服务端（零 npm 依赖：node:http + node:sqlite）"
+}

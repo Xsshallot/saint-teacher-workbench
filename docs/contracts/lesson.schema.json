@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "saint/lesson/v1",
+  "title": "课次",
+  "type": "object",
+  "required": ["course_id", "title"],
+  "properties": {
+    "id": { "type": "integer" },
+    "course_id": { "type": "integer" },
+    "title": { "type": "string" },
+    "lesson_date": { "type": ["string", "null"], "format": "date" },
+    "order_no": { "type": ["integer", "null"] },
+    "meeting_code": { "type": ["string", "null"], "description": "关联腾讯会议号" },
+    "summary": { "type": ["string", "null"], "description": "一课小结（来自会议纪要）" },
+    "materials": { "type": "array", "items": { "type": "object", "properties": { "type": { "type": "string" }, "code": { "type": "string" }, "url": { "type": "string" } } } }
+  }
+}

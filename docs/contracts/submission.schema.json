@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "saint/submission/v1",
+  "title": "作业提交",
+  "type": "object",
+  "required": ["assignment_id", "student_id"],
+  "properties": {
+    "id": { "type": "integer" },
+    "assignment_id": { "type": "integer" },
+    "student_id": { "type": "integer" },
+    "status": { "type": "string", "enum": ["已交", "迟交", "未交"] },
+    "submitted_at": { "type": ["string", "null"], "format": "date-time" },
+    "content_excerpt": { "type": ["string", "null"], "maxLength": 300, "description": "内容摘要" },
+    "attachment_count": { "type": "integer", "minimum": 0 },
+    "skill_file_count": { "type": "integer", "minimum": 0, "description": "提交的 Skill 包数量" }
+  }
+}

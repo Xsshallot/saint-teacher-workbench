@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "saint/sync/v1",
+  "title": "同步元数据",
+  "type": "object",
+  "properties": {
+    "source": {
+      "type": "object",
+      "required": ["source_key", "name"],
+      "properties": {
+        "source_key": { "type": "string", "enum": ["local-import", "tencent-survey", "tencent-docs", "tencent-meeting", "feishu"] },
+        "name": { "type": "string" },
+        "type": { "type": "string" },
+        "status": { "type": "string", "enum": ["已连接", "未配置", "异常"] },
+        "config": { "type": "object" }
+      }
+    },
+    "log": {
+      "type": "object",
+      "required": ["job_key", "status"],
+      "properties": {
+        "job_key": { "type": "string" },
+        "started_at": { "type": "string", "format": "date-time" },
+        "finished_at": { "type": ["string", "null"], "format": "date-time" },
+        "status": { "type": "string", "enum": ["running", "success", "failed"] },
+        "added": { "type": "integer" },
+        "updated": { "type": "integer" },
+        "message": { "type": ["string", "null"] }
+      }
+    }
+  }
+}

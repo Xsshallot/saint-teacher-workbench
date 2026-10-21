@@ -1,0 +1,20 @@
+{
+  "name": "saint-teacher-workbench",
+  "version": "0.1.0",
+  "description": "SAINT · Super AI Networked Teacher —— 开源教师个人数据中枢：网站工作台 + 双 Skill + 定时数据同步",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.5.0"
+  },
+  "scripts": {
+    "setup": "npm --prefix web install && npm --prefix server install",
+    "import": "node connectors/local-import/import-training-camp.mjs",
+    "mock": "node server/src/seed-mock.js",
+    "sync": "node sync/sync-runner.mjs",
+    "build": "npm --prefix web run build",
+    "start": "node --experimental-sqlite server/src/app.js",
+    "dev:web": "npm --prefix web run dev",
+    "skill-b": "node skills/skill-b/generate.mjs"
+  }
+}

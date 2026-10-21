@@ -1,0 +1,16 @@
+# ---- 真实学员数据（硬性：绝不入库/绝不提交；运行时自动创建） ----
+data/
+
+# ---- 生成产物 ----
+web/dist/
+web/node_modules/
+server/node_modules/
+node_modules/
+skills/skill-b/generated/
+*.log
+
+# ---- 本地环境 ----
+.env
+.env.*
+.DS_Store
+Thumbs.db

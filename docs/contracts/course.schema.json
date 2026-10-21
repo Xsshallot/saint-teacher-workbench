@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "saint/course/v1",
+  "title": "课程",
+  "type": "object",
+  "required": ["code", "name"],
+  "properties": {
+    "id": { "type": "integer" },
+    "code": { "type": "string", "description": "课程唯一编码，如 AI-CAMP-2026" },
+    "name": { "type": "string" },
+    "description": { "type": ["string", "null"] },
+    "start_date": { "type": ["string", "null"], "format": "date" },
+    "status": { "type": "string", "enum": ["未开始", "进行中", "已结束"] }
+  }
+}

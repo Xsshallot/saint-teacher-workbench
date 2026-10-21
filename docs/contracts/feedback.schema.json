@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "saint/feedback/v1",
+  "title": "反馈（下节课愿望）",
+  "type": "object",
+  "required": ["student_id", "wish_text"],
+  "properties": {
+    "id": { "type": "integer" },
+    "student_id": { "type": "integer" },
+    "course_id": { "type": ["integer", "null"] },
+    "wish_text": { "type": "string", "maxLength": 500 },
+    "theme": { "type": "string", "description": "聚类主题：自动化与定时任务/黑客松实战/FDE 与商业化/Skill 进化/工程方法论/视频与创作/信息渠道/金融应用/AI 沟通/学习与基础/其他" },
+    "created_at": { "type": ["string", "null"], "format": "date-time" },
+    "source": { "type": "string", "description": "来源问卷" }
+  }
+}

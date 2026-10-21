@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "saint/meeting/v1",
+  "title": "会议记录",
+  "type": "object",
+  "required": ["subject"],
+  "properties": {
+    "id": { "type": "integer" },
+    "meeting_code": { "type": ["string", "null"], "description": "腾讯会议号" },
+    "subject": { "type": "string" },
+    "start_time": { "type": ["string", "null"], "format": "date-time" },
+    "duration_min": { "type": ["integer", "null"] },
+    "has_minutes": { "type": "integer", "enum": [0, 1] },
+    "summary": { "type": ["string", "null"], "description": "智能纪要摘要" },
+    "lesson_id": { "type": ["integer", "null"] }
+  }
+}
