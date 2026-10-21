@@ -22,6 +22,7 @@ export const api = {
     return req(`/api/submissions?${s}`);
   },
   feedback: (theme = '') => req(`/api/feedback?theme=${encodeURIComponent(theme)}`),
+  documents: (docType = '') => req(`/api/documents?doc_type=${encodeURIComponent(docType)}`),
   syncStatus: () => req('/api/sync/status'),
   syncRun: () => req('/api/sync/run', { method: 'POST', body: '{}' }),
 };
