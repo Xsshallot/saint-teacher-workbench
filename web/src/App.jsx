@@ -49,7 +49,7 @@ export default function App() {
       {/* 侧边栏 */}
       <aside className={`fixed lg:sticky top-0 z-40 h-screen w-60 bg-slate-900 text-slate-300 flex flex-col transition-transform ${menuOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}`}>
         <div className="flex items-center gap-3 px-5 h-16 border-b border-slate-800">
-          <div className="w-9 h-9 rounded-lg bg-indigo-500 flex items-center justify-center text-white font-bold">S</div>
+          <div className="w-9 h-9 rounded-lg bg-primary-500 flex items-center justify-center text-white font-bold">S</div>
           <div>
             <div className="text-white font-bold leading-tight">SAINT</div>
             <div className="text-[11px] text-slate-400">超级教师工作台</div>
@@ -64,7 +64,7 @@ export default function App() {
                 href={`#${n.path}`}
                 onClick={() => setMenuOpen(false)}
                 className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-colors ${
-                  active ? 'bg-indigo-500/90 text-white font-medium' : 'hover:bg-slate-800 hover:text-white'
+                  active ? 'bg-primary-500/90 text-white font-medium' : 'hover:bg-slate-800 hover:text-white'
                 }`}
               >
                 <span className="flex items-center justify-center">

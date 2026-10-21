@@ -14,7 +14,7 @@ export default function Feedback() {
         <button
           onClick={() => setTheme('')}
           className={`px-3.5 py-1.5 rounded-full text-xs border transition-colors ${
-            theme === '' ? 'bg-indigo-500 text-white border-indigo-500' : 'bg-white border-slate-200 text-slate-600 hover:border-indigo-300'
+            theme === '' ? 'bg-primary-500 text-white border-primary-500' : 'bg-white border-slate-200 text-slate-600 hover:border-primary-300'
           }`}
         >
           全部
@@ -24,7 +24,7 @@ export default function Feedback() {
             key={t.theme}
             onClick={() => setTheme(t.theme)}
             className={`px-3.5 py-1.5 rounded-full text-xs border transition-colors ${
-              theme === t.theme ? 'bg-indigo-500 text-white border-indigo-500' : 'bg-white border-slate-200 text-slate-600 hover:border-indigo-300'
+              theme === t.theme ? 'bg-primary-500 text-white border-primary-500' : 'bg-white border-slate-200 text-slate-600 hover:border-primary-300'
             }`}
           >
             {t.theme} <span className="opacity-60">{t.n}</span>

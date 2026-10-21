@@ -26,7 +26,7 @@ export default function Assignments() {
               key={a.id}
               onClick={() => setActiveId(a.id)}
               className={`text-left bg-white border rounded-xl shadow-sm p-4 transition-all hover:shadow ${
-                active ? 'border-indigo-400 ring-2 ring-indigo-100' : 'border-slate-200'
+                active ? 'border-primary-400 ring-2 ring-primary-100' : 'border-slate-200'
               }`}
             >
               <div className="flex items-center gap-2 mb-2">
@@ -51,7 +51,7 @@ export default function Assignments() {
         <div className="bg-white border border-slate-200 rounded-xl shadow-sm">
           <div className="px-5 py-4 border-b border-slate-100 flex items-center gap-3">
             <h3 className="font-semibold text-slate-700">提交明细 · {currentAsg.title}</h3>
-            {subs.loading ? <span className="text-xs text-slate-400">加载中…</span> : <Badge color="indigo">{(subs.data || []).length} 份</Badge>}
+            {subs.loading ? <span className="text-xs text-slate-400">加载中…</span> : <Badge color="primary">{(subs.data || []).length} 份</Badge>}
           </div>
           <div className="divide-y divide-slate-100 max-h-[560px] overflow-y-auto">
             {(subs.data || []).map((x) => (
@@ -59,7 +59,7 @@ export default function Assignments() {
                 <div className="flex items-center gap-3 flex-wrap">
                   <Link to={`/students/${x.student_id}`} className="flex items-center gap-2.5 group">
                     <Avatar name={x.nickname} size={30} hue={(x.student_id * 47) % 360} />
-                    <span className="text-sm font-medium text-slate-700 group-hover:text-indigo-600">{x.nickname}</span>
+                    <span className="text-sm font-medium text-slate-700 group-hover:text-primary-600">{x.nickname}</span>
                   </Link>
                   <Badge color={x.status === '迟交' ? 'rose' : 'emerald'}>{x.status}</Badge>
                   {!!x.skill_file_count && <Badge color="violet">Skill ×{x.skill_file_count}</Badge>}

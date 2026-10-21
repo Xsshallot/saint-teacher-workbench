@@ -23,7 +23,7 @@ export default function StudentDetail({ id }) {
             <div className="flex items-center gap-3 flex-wrap">
               <h2 className="text-xl font-bold text-slate-800">{s.nickname}</h2>
               {s.real_name && <span className="text-slate-400 text-sm">{s.real_name}</span>}
-              <Badge color="indigo">{s.class_name}</Badge>
+              <Badge color="primary">{s.class_name}</Badge>
               {s.activity_count >= 5 && <Badge color="emerald">高活跃</Badge>}
             </div>
             <div className="flex flex-wrap gap-1.5 mt-2">
@@ -50,7 +50,7 @@ export default function StudentDetail({ id }) {
               {s.mbti && <span>MBTI：{s.mbti}</span>}
             </div>
           </div>
-          <Link to="/students" className="text-sm text-indigo-600 hover:underline">← 返回列表</Link>
+          <Link to="/students" className="text-sm text-primary-600 hover:underline">← 返回列表</Link>
         </div>
       </div>
 

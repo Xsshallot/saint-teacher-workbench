@@ -55,7 +55,7 @@ export default function Settings() {
           <button
             onClick={runSync}
             disabled={running}
-            className="px-4 py-1.5 rounded-lg bg-indigo-500 hover:bg-indigo-600 disabled:opacity-50 text-white text-xs font-medium transition-colors"
+            className="px-4 py-1.5 rounded-lg bg-primary-500 hover:bg-primary-600 disabled:opacity-50 text-white text-xs font-medium transition-colors"
           >
             {running ? '同步中…' : '立即同步'}
           </button>
@@ -103,7 +103,7 @@ export default function Settings() {
           <a
             href="/api/contract"
             target="_blank"
-            className="px-4 py-2 rounded-lg border border-slate-300 hover:border-indigo-300 text-slate-600 text-xs font-medium transition-colors"
+            className="px-4 py-2 rounded-lg border border-slate-300 hover:border-primary-300 text-slate-600 text-xs font-medium transition-colors"
           >
             查看数据契约
           </a>

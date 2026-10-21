@@ -16,9 +16,9 @@ export function Card({ title, extra, children, className = '', pad = true }) {
   );
 }
 
-export function StatCard({ label, value, sub, tone = 'indigo', icon }) {
+export function StatCard({ label, value, sub, tone = 'primary', icon }) {
   const tones = {
-    indigo: 'bg-indigo-50',
+    primary: 'bg-primary-50',
     emerald: 'bg-emerald-50',
     amber: 'bg-amber-50',
     rose: 'bg-rose-50',
@@ -39,7 +39,7 @@ export function StatCard({ label, value, sub, tone = 'indigo', icon }) {
 export function Badge({ children, color = 'slate' }) {
   const map = {
     slate: 'bg-slate-100 text-slate-600',
-    indigo: 'bg-indigo-100 text-indigo-700',
+    primary: 'bg-primary-100 text-primary-700',
     emerald: 'bg-emerald-100 text-emerald-700',
     amber: 'bg-amber-100 text-amber-700',
     rose: 'bg-rose-100 text-rose-700',
@@ -84,13 +84,13 @@ export function ErrorBox({ error, retry }) {
         <Warning2 variant="Linear" size={20} color="#f43f5e" />
         {String(error)}
       </div>
-      {retry && <button onClick={retry} className="text-indigo-600 hover:underline text-sm">重试</button>}
+      {retry && <button onClick={retry} className="text-primary-600 hover:underline text-sm">重试</button>}
     </div>
   );
 }
 
 /** 简单 SVG 柱状图（周度活跃） */
-export function BarChart({ data = [], height = 160, color = '#6366f1' }) {
+export function BarChart({ data = [], height = 160, color = '#5B84FA' }) {
   if (!data.length) return <Empty />;
   const max = Math.max(...data.map((d) => d.count), 1);
   const w = 100 / data.length;
