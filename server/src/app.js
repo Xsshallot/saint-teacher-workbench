@@ -59,6 +59,7 @@ function ensureDefaults() {
   }
   const jobs = [
     ['daily-import', '每日增量同步（本地导入连接器）', '0 6 * * *'],
+    ['tencent-sync', '腾讯连接器同步（问卷/会议/文档）', '30 6 * * *'],
   ];
   for (const [key, name, cron] of jobs) {
     if (!get(`SELECT id FROM sys_cron_job WHERE job_key=?`, key)) insert('sys_cron_job', { job_key: key, job_name: name, cron_expr: cron, enabled: 1 });

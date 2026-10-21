@@ -194,21 +194,30 @@ function syncStatus() {
   }));
   return { sources: sources.map((s) => ({ ...s, config: J(s.config, {}) })), jobs };
 }
-async function syncRun(jobKey = 'daily-import') {
+async function syncRun(jobKey = 'all') {
   const started = nowStr();
-  const logId = insert('syn_log', { job_key: jobKey, source_key: 'local-import', started_at: started, status: 'running' });
-  try {
-    const { runImport } = await import('../../connectors/local-import/import-training-camp.mjs');
-    const r = await runImport();
-    run(`UPDATE syn_log SET finished_at=?, status='success', added=?, updated=?, message=? WHERE id=?`,
-      nowStr(), r.added, r.updated, `导入完成：学员 ${r.students} 人，提交 ${r.submissions} 条，愿望 ${r.wishes} 条，会议 ${r.meetings} 条`, logId);
-    run(`UPDATE sys_cron_job SET last_run_time=?, last_status='success' WHERE job_key=?`, nowStr(), jobKey);
-    return ok(r);
-  } catch (e) {
-    run(`UPDATE syn_log SET finished_at=?, status='failed', message=? WHERE id=?`, nowStr(), String(e), logId);
-    run(`UPDATE sys_cron_job SET last_run_time=?, last_status='failed' WHERE job_key=?`, nowStr(), jobKey);
-    return fail(e);
+  const results = {};
+  const jobs = [
+    { key: 'daily-import', source: 'local-import', path: '../../connectors/local-import/import-training-camp.mjs', label: '本地导入' },
+    { key: 'tencent-sync', source: 'tencent-import', path: '../../connectors/tencent-import/import-tencent.mjs', label: '腾讯连接器同步' },
+  ].filter((j) => !jobKey || jobKey === 'all' || j.key === jobKey);
+
+  for (const j of jobs) {
+    const logId = insert('syn_log', { job_key: j.key, source_key: j.source, started_at: started, status: 'running' });
+    try {
+      const { runImport } = await import(j.path);
+      const r = await runImport();
+      run(`UPDATE syn_log SET finished_at=?, status='success', added=?, updated=?, message=? WHERE id=?`,
+        nowStr(), r.added ?? 0, r.updated ?? 0, `${j.label}完成：${JSON.stringify(r)}`, logId);
+      run(`UPDATE sys_cron_job SET last_run_time=?, last_status='success' WHERE job_key=?`, nowStr(), j.key);
+      results[j.key] = r;
+    } catch (e) {
+      run(`UPDATE syn_log SET finished_at=?, status='failed', message=? WHERE id=?`, nowStr(), String(e), logId);
+      run(`UPDATE sys_cron_job SET last_run_time=?, last_status='failed' WHERE job_key=?`, nowStr(), j.key);
+      results[j.key] = { error: String(e) };
+    }
   }
+  return ok(results);
 }
 function nowStr() {
   return new Date().toISOString().slice(0, 19).replace('T', ' ');

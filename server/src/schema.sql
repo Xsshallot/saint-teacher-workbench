@@ -185,6 +185,7 @@ CREATE TABLE IF NOT EXISTS asg_followup (
   assignment_id INTEGER,
   note          TEXT,                          -- 卡点/问题/跟进记录
   created_at    TEXT,
+  source        TEXT DEFAULT 'local-import',
   create_by     TEXT DEFAULT 'system',
   create_time   TEXT DEFAULT (datetime('now','localtime')),
   update_by     TEXT,
