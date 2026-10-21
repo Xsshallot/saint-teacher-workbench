@@ -52,7 +52,7 @@ export default function Screen() {
       {/* 顶部标题栏 */}
       <div className="flex items-center justify-between border-b border-slate-800 pb-4">
         <div className="flex items-center gap-4">
-          <div className="w-12 h-12 rounded-xl bg-primary-500 flex items-center justify-center text-2xl font-black">S</div>
+          <img src="/logo.jpg" alt="SAINT" className="w-14 h-14 rounded-xl object-cover border border-slate-800" />
           <div>
             <div className="text-2xl font-bold tracking-wide">SAINT · 超级教师工作台</div>
             <div className="text-slate-500 text-sm">讲课数据大屏 · 数据实时同步</div>
