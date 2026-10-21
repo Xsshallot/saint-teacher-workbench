@@ -41,7 +41,7 @@ AI 会引导你完成全部 6 步。
 ### 方式二：手动搭建
 
 ```bash
-git clone https://github.com/<你的账号>/saint-teacher-workbench.git
+git clone https://github.com/Xsshallot/saint-teacher-workbench.git
 cd saint-teacher-workbench
 
 npm run setup    # 安装依赖
@@ -92,7 +92,7 @@ npm run skill-b  # 生成你的工作台专属 Skill
 An open-source **personal data hub for teachers**: a web workbench + two Skills (setup guide + auto-generated workbench Skill) + scheduled data sync. Sync your **Tencent Survey / Tencent Docs / Tencent Meeting** (plus Feishu) data automatically for student tracking, progress management and lesson prep. After deployment, a **workbench-specific Skill** is auto-generated so any AI agent can query your data in natural language.
 
 ```bash
-git clone https://github.com/<your-account>/saint-teacher-workbench.git
+git clone https://github.com/Xsshallot/saint-teacher-workbench.git
 cd saint-teacher-workbench
 npm run setup && npm run build && npm run mock && npm start
 # → http://localhost:8787   (Node ≥ 22.5, zero server dependencies)

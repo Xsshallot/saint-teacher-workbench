@@ -38,7 +38,7 @@ node -v
 ## 第 2 步 · 拉取模板并启动
 
 ```bash
-git clone https://github.com/<你的GitHub账号>/saint-teacher-workbench.git
+git clone https://github.com/Xsshallot/saint-teacher-workbench.git
 cd saint-teacher-workbench
 npm run setup     # 安装依赖（web + server）
 npm run build     # 构建前端
