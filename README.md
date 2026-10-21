@@ -32,7 +32,7 @@
 
 ### 方式一：给 AI 说一句话（推荐）
 
-在你的 AI 智能体（ZCode 等）里挂载 `skills/skill-a/SKILL.md`，然后说：
+在你的 AI 智能体（WorkBuddy 等）里挂载 `skills/skill-a/SKILL.md`，然后说：
 
 > 我想搭一个超级教师工作台
 

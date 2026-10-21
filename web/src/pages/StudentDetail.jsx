@@ -1,9 +1,10 @@
 import React from 'react';
+import { DirectInbox, MessageQuestion, Warning2, InfoCircle, Flag } from 'iconsax-react';
 import { Link } from '../router.jsx';
 import { api } from '../api.js';
 import { Card, Avatar, Badge, Loading, Empty, useApi, fmtDate } from '../components/ui.jsx';
 
-const typeIcon = { submission: '📥', wish: '💭', followup: '🧩' };
+const typeIcon = { submission: DirectInbox, wish: MessageQuestion, followup: Warning2 };
 
 export default function StudentDetail({ id }) {
   const { loading, data, error } = useApi(() => api.student(id));
@@ -29,8 +30,18 @@ export default function StudentDetail({ id }) {
               {(s.focus_areas || []).map((a) => <Badge key={a} color="violet">{a}</Badge>)}
               {(s.tags || []).filter((t) => t !== '高活跃').map((t) => <Badge key={t}>{t}</Badge>)}
             </div>
-            {s.background && <div className="text-sm text-slate-600 mt-3">📌 {s.background}</div>}
-            {s.long_term_goal && <div className="text-sm text-slate-500 mt-1">🎯 长期规划：{s.long_term_goal}</div>}
+            {s.background && (
+              <div className="text-sm text-slate-600 mt-3 flex items-start gap-1.5">
+                <InfoCircle variant="Linear" size={15} color="#64748b" className="mt-0.5 shrink-0" />
+                <span>{s.background}</span>
+              </div>
+            )}
+            {s.long_term_goal && (
+              <div className="text-sm text-slate-500 mt-1 flex items-start gap-1.5">
+                <Flag variant="Linear" size={15} color="#94a3b8" className="mt-0.5 shrink-0" />
+                <span>长期规划：{s.long_term_goal}</span>
+              </div>
+            )}
             <div className="flex gap-6 mt-3 text-xs text-slate-400">
               <span>首次活跃 {fmtDate(s.first_seen)}</span>
               <span>最近活跃 {fmtDate(s.last_active)}</span>
@@ -49,7 +60,9 @@ export default function StudentDetail({ id }) {
           <div className="space-y-3 max-h-[560px] overflow-y-auto pt-1 pr-1">
             {s.timeline.map((t, i) => (
               <div key={i} className="flex gap-3">
-                <div className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-sm shrink-0">{typeIcon[t.type] || '•'}</div>
+                <div className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center shrink-0">
+                  {(() => { const Ico = typeIcon[t.type]; return Ico ? <Ico variant="Linear" size={16} color="#64748b" /> : <span className="text-slate-400 text-xs">•</span>; })()}
+                </div>
                 <div className="flex-1 border-b border-slate-100 pb-3">
                   <div className="flex items-center gap-2 flex-wrap">
                     <span className="text-sm font-medium text-slate-700">{t.title}</span>

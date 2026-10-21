@@ -14,10 +14,10 @@ export default function Settings() {
     setRunMsg('');
     try {
       const r = await api.syncRun();
-      setRunMsg(`✅ 同步完成：学员 ${r.students} 人，提交 ${r.submissions} 条，愿望 ${r.wishes} 条，会议 ${r.meetings} 条（${r.elapsed_ms} ms）`);
+      setRunMsg(`同步完成：学员 ${r.students} 人，提交 ${r.submissions} 条，愿望 ${r.wishes} 条，会议 ${r.meetings} 条（${r.elapsed_ms} ms）`);
       reload();
     } catch (e) {
-      setRunMsg(`❌ 同步失败：${e}`);
+      setRunMsg(`同步失败：${e}`);
     }
     setRunning(false);
   };

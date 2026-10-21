@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Category, Profile2User, Teacher, TaskSquare, MessageText, Setting2, Menu } from 'iconsax-react';
 import Dashboard from './pages/Dashboard.jsx';
 import Students from './pages/Students.jsx';
 import StudentDetail from './pages/StudentDetail.jsx';
@@ -19,12 +20,12 @@ function useHashRoute() {
 }
 
 const NAV = [
-  { path: '/', label: '总览', icon: '📊', match: (p) => p === '/' },
-  { path: '/students', label: '学员', icon: '👥', match: (p) => p.startsWith('/students') },
-  { path: '/courses', label: '课程与会议', icon: '📚', match: (p) => p.startsWith('/courses') },
-  { path: '/assignments', label: '作业任务', icon: '📝', match: (p) => p.startsWith('/assignments') },
-  { path: '/feedback', label: '反馈墙', icon: '💬', match: (p) => p.startsWith('/feedback') },
-  { path: '/settings', label: '设置', icon: '⚙️', match: (p) => p.startsWith('/settings') },
+  { path: '/', label: '总览', icon: Category, match: (p) => p === '/' },
+  { path: '/students', label: '学员', icon: Profile2User, match: (p) => p.startsWith('/students') },
+  { path: '/courses', label: '课程与会议', icon: Teacher, match: (p) => p.startsWith('/courses') },
+  { path: '/assignments', label: '作业任务', icon: TaskSquare, match: (p) => p.startsWith('/assignments') },
+  { path: '/feedback', label: '反馈墙', icon: MessageText, match: (p) => p.startsWith('/feedback') },
+  { path: '/settings', label: '设置', icon: Setting2, match: (p) => p.startsWith('/settings') },
 ];
 
 export default function App() {
@@ -66,7 +67,9 @@ export default function App() {
                   active ? 'bg-indigo-500/90 text-white font-medium' : 'hover:bg-slate-800 hover:text-white'
                 }`}
               >
-                <span className="text-base">{n.icon}</span>
+                <span className="flex items-center justify-center">
+                  <n.icon variant="Linear" size={19} color={active ? '#ffffff' : '#94a3b8'} />
+                </span>
                 {n.label}
               </a>
             );
@@ -83,7 +86,9 @@ export default function App() {
       {/* 主区域 */}
       <div className="flex-1 min-w-0 flex flex-col">
         <header className="sticky top-0 z-20 bg-white/90 backdrop-blur border-b border-slate-200 h-16 flex items-center gap-4 px-4 lg:px-8">
-          <button className="lg:hidden text-slate-500 text-xl" onClick={() => setMenuOpen(true)}>☰</button>
+          <button className="lg:hidden text-slate-500 flex items-center" onClick={() => setMenuOpen(true)} aria-label="打开菜单">
+            <Menu variant="Linear" size={22} color="#64748b" />
+          </button>
           <h1 className="text-lg font-bold text-slate-800">{title}</h1>
           <div className="ml-auto text-xs text-slate-400 hidden sm:block">
             数据由问卷 / 会议连接器每日自动同步

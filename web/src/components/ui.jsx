@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Warning2 } from 'iconsax-react';
 import { api } from '../api.js';
 
 export function Card({ title, extra, children, className = '', pad = true }) {
@@ -17,15 +18,15 @@ export function Card({ title, extra, children, className = '', pad = true }) {
 
 export function StatCard({ label, value, sub, tone = 'indigo', icon }) {
   const tones = {
-    indigo: 'bg-indigo-50 text-indigo-600',
-    emerald: 'bg-emerald-50 text-emerald-600',
-    amber: 'bg-amber-50 text-amber-600',
-    rose: 'bg-rose-50 text-rose-600',
-    sky: 'bg-sky-50 text-sky-600',
+    indigo: 'bg-indigo-50',
+    emerald: 'bg-emerald-50',
+    amber: 'bg-amber-50',
+    rose: 'bg-rose-50',
+    sky: 'bg-sky-50',
   };
   return (
     <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-5 flex items-center gap-4">
-      {icon && <div className={`w-11 h-11 rounded-lg flex items-center justify-center text-xl ${tones[tone]}`}>{icon}</div>}
+      {icon && <div className={`w-11 h-11 rounded-lg flex items-center justify-center shrink-0 ${tones[tone]}`}>{icon}</div>}
       <div className="min-w-0">
         <div className="text-slate-500 text-xs">{label}</div>
         <div className="text-2xl font-bold text-slate-800 leading-tight">{value}</div>
@@ -79,7 +80,10 @@ export function Empty({ text = '暂无数据' }) {
 export function ErrorBox({ error, retry }) {
   return (
     <div className="text-center py-12">
-      <div className="text-rose-500 mb-2">⚠️ {String(error)}</div>
+      <div className="flex items-center justify-center gap-2 text-rose-500 mb-2">
+        <Warning2 variant="Linear" size={20} color="#f43f5e" />
+        {String(error)}
+      </div>
       {retry && <button onClick={retry} className="text-indigo-600 hover:underline text-sm">重试</button>}
     </div>
   );

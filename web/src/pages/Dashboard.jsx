@@ -1,4 +1,5 @@
 import React from 'react';
+import { Profile2User, NotificationBing, BookSquare, MessageFavorite } from 'iconsax-react';
 import { Link } from '../router.jsx';
 import { api } from '../api.js';
 import { Card, StatCard, Badge, Avatar, BarChart, Loading, Empty, useApi, fmtDay } from '../components/ui.jsx';
@@ -14,10 +15,10 @@ export default function Dashboard() {
     <div className="space-y-6">
       {/* 指标卡 */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <StatCard label="学员总数" value={s.student_count} sub={`近 30 天活跃 ${s.active_30d} 人`} icon="👥" tone="indigo" />
-        <StatCard label="待跟进" value={s.pending_follow_count} sub="活跃学员未交最近作业" icon="🔔" tone="rose" />
-        <StatCard label="课程进度" value={`${s.last_lesson ? '第 ' + (s.last_lesson.order_no || '-') + ' 课' : '-'}`} sub={s.last_lesson ? `${fmtDay(s.last_lesson.lesson_date)} ${s.last_lesson.title.slice(0, 12)}` : ''} icon="📚" tone="sky" />
-        <StatCard label="反馈愿望" value={s.wish_count} sub={`覆盖 ${s.feedback_themes.length} 个主题`} icon="💬" tone="amber" />
+        <StatCard label="学员总数" value={s.student_count} sub={`近 30 天活跃 ${s.active_30d} 人`} tone="indigo" icon={<Profile2User variant="Linear" size={22} color="#4f46e5" />} />
+        <StatCard label="待跟进" value={s.pending_follow_count} sub="活跃学员未交最近作业" tone="rose" icon={<NotificationBing variant="Linear" size={22} color="#e11d48" />} />
+        <StatCard label="课程进度" value={`${s.last_lesson ? '第 ' + (s.last_lesson.order_no || '-') + ' 课' : '-'}`} sub={s.last_lesson ? `${fmtDay(s.last_lesson.lesson_date)} ${s.last_lesson.title.slice(0, 12)}` : ''} tone="sky" icon={<BookSquare variant="Linear" size={22} color="#0284c7" />} />
+        <StatCard label="反馈愿望" value={s.wish_count} sub={`覆盖 ${s.feedback_themes.length} 个主题`} tone="amber" icon={<MessageFavorite variant="Linear" size={22} color="#d97706" />} />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -61,7 +62,7 @@ export default function Dashboard() {
               ))}
             </div>
           ) : (
-            <Empty text="全部已交 🎉" />
+            <Empty text="全部已交，无需跟进" />
           )}
         </Card>
 
